@@ -33,7 +33,7 @@ img{display:block}
 .urg-online{color:var(--cyan)}
 .urg-cta a{color:#f59e0b;font-weight:700;letter-spacing:.5px;animation:amber-pulse 2s ease-in-out infinite}
 @keyframes amber-pulse{0%,100%{opacity:1}50%{opacity:.55}}
-.urg-scarcity{color:#ff4444;font-weight:700}
+.urg-scarcity{color:var(--cyan);font-weight:700}
 @media(max-width:640px){.urg-item:nth-child(2),.urg-item:nth-child(4){display:none}}
 
 
@@ -503,7 +503,7 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:48px 2
     <div class="urg-item urg-countdown">⏱ <span id="countdown">01:43:27</span></div>
     <div class="urg-item urg-online">🟢 <span id="online-count-bar">4.200</span> pessoas online agora</div>
     <div class="urg-item urg-cta"><a href="javascript:void(0)" onclick="abrirModalCadastro()">🎁 TESTE GRÁTIS →</a></div>
-    <div class="urg-item urg-scarcity">🔥 Só restam 3 vagas!</div>
+    <div class="urg-item urg-scarcity">✅ Sem contratos · Cancela quando quiseres</div>
   </div>
 </div>
 
@@ -718,7 +718,7 @@ footer{background:var(--navy2);border-top:1px solid var(--border);padding:48px 2
   <div class="stats-grid">
     <div class="stat-item reveal"><span class="stat-number" data-target="12000" data-prefix="+">0</span><div class="stat-label">Canais</div></div>
     <div class="stat-item reveal"><span class="stat-number" data-target="50000" data-prefix="+">0</span><div class="stat-label">Filmes e Séries</div></div>
-    <div class="stat-item reveal"><span class="stat-number" data-target="24" data-suffix="h">0</span><div class="stat-label">Suporte</div></div>
+    <div class="stat-item reveal"><span class="stat-number">24H</span><div class="stat-label">Suporte</div></div>
     <div class="stat-item reveal"><span class="stat-number" data-target="500" data-prefix="+">0</span><div class="stat-label">Clientes Europa</div></div>
   </div>
 </section>
@@ -1577,7 +1577,7 @@ function animateCounter(el){
 }
 const statsObs=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);statsObs.unobserve(e.target);}});
-},{threshold:0.5});
+},{threshold:0.1});
 document.querySelectorAll('.stat-number[data-target]').forEach(el=>statsObs.observe(el));
 
 // ── FAQ ──
