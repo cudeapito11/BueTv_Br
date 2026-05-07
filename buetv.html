@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buétv — Tudo o que assistes, num só lugar</title>
+<meta name="description" content="Mais de 12.000 canais, futebol ao vivo, filmes e séries. A partir de €15/mês. Experimenta 24h grátis.">
+<meta property="og:title" content="Buétv — Streaming sem limites">
+<meta property="og:description" content="+12.000 canais, futebol ao vivo, filmes e séries por apenas €15/mês.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#04091A;--navy2:#070F2B;--blue:#0A1F4E;
+  --cyan:#00D4FF;--cyan-dark:#0099BB;--orange:#FF8C00;
+  --white:#FFFFFF;--gray:#8A9BBF;
+  --border:rgba(0,212,255,0.12);--glow:0 0 30px rgba(0,212,255,0.3);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden}
+h1,h2,h3,.stat-number,.plan-price,.compare-total,.compare-buetv-price{font-family:'Bebas Neue',sans-serif}
+a{text-decoration:none;color:inherit}
+img{display:block}
+
+/* ── URGENCY BAR ── */
+#urgency-bar{position:fixed;top:0;left:0;width:100%;height:40px;z-index:1001;background:linear-gradient(90deg,#0A1F4E,#04091A,#0A1F4E);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.urgency-inner{display:flex;align-items:center;justify-content:center;gap:28px;width:100%;padding:0 16px;white-space:nowrap;overflow:hidden}
+.urg-item{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px;flex-shrink:0}
+.urg-countdown{color:var(--white)}
+.urg-online{color:var(--cyan)}
+.urg-cta a{color:#f59e0b;font-weight:700;letter-spacing:.5px;animation:amber-pulse 2s ease-in-out infinite}
+@keyframes amber-pulse{0%,100%{opacity:1}50%{opacity:.55}}
+.urg-scarcity{color:#ff4444;font-weight:700}
+@media(max-width:640px){.urg-item:nth-child(2),.urg-item:nth-child(4){display:none}}
+
+
+/* ── SHIMMER ── */
+@keyframes shimmer-anim{0%{background-position:-200% center}100%{background-position:200% center}}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 80% 60% at 50% 40%,var(--blue) 0%,var(--navy) 100%);padding-top:40px}
+.particles{position:absolute;inset:0;pointer-events:none}
+.particle{position:absolute;width:3px;height:3px;background:var(--cyan);border-radius:50%;animation:blink var(--d,3s) ease-in-out infinite var(--del,0s)}
+@keyframes blink{0%,100%{opacity:0;transform:scale(0.5)}50%{opacity:.8;transform:scale(1)}}
+.hero-badge{display:inline-block;border:1px solid var(--cyan);color:var(--cyan);padding:6px 18px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:3px;margin-bottom:12px;animation:fadeUp .6s ease}
+.hero-online-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,212,255,0.1);border:1px solid var(--cyan);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:var(--cyan);margin-bottom:16px;animation:fadeUp .65s ease}
+.hero-online-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:dot-pulse 1.4s ease-in-out infinite;flex-shrink:0}
+@keyframes dot-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero-title{font-size:clamp(48px,7vw,80px);line-height:1.05;margin-bottom:16px;animation:fadeUp .7s ease}
+.hero-social-proof{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px;animation:fadeUp .75s ease;flex-wrap:wrap}
+.avatars-row{display:flex;align-items:center}
+.avatar-sm{width:36px;height:36px;border-radius:50%;border:2px solid var(--white);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-left:-8px;flex-shrink:0}
+.avatar-sm:first-child{margin-left:0}
+.proof-text{font-size:14px;color:var(--gray)}
+.proof-text strong{color:var(--white)}
+.hero-sub{color:var(--gray);font-size:clamp(15px,2vw,18px);margin-bottom:28px;animation:fadeUp .8s ease}
+.hero-sub span{color:var(--cyan);font-weight:600}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .9s ease}
+.btn-primary{background:linear-gradient(90deg,#00D4FF,#0099BB,#00FFE0,#0099BB,#00D4FF);background-size:300% auto;animation:shimmer-anim 3s linear infinite;color:var(--navy);font-weight:700;padding:18px 48px;border-radius:8px;font-size:18px;transition:all .2s;border:none;cursor:pointer;box-shadow:0 0 30px rgba(0,212,255,0.5)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(0,212,255,0.7)}
+.btn-outline{border:2px solid var(--cyan);color:var(--cyan);background:transparent;font-weight:700;padding:18px 32px;border-radius:8px;font-size:16px;cursor:pointer;transition:all .2s}
+.btn-outline:hover{background:rgba(0,212,255,0.1);transform:translateY(-2px)}
+.hero-microcopy{color:var(--gray);font-size:13px;margin-top:12px;animation:fadeUp .95s ease}
+.hero-badges{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:20px;animation:fadeUp 1s ease}
+.hero-badge-item{color:var(--gray);font-size:14px;display:flex;align-items:center;gap:6px}
+.hero-badge-item::before{content:'✓';color:var(--cyan);font-weight:700}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CATEGORY CARDS ── */
+#category-cards{padding:48px 0;background:var(--navy)}
+.cat-cards-row{display:flex;gap:16px;justify-content:center;padding:0 24px;flex-wrap:wrap}
+.cat-card{width:220px;height:300px;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;flex-shrink:0;transition:transform .3s}
+.cat-card:hover{transform:scale(1.03)}
+.cat-card img{width:100%;height:100%;object-fit:cover;display:block}
+.cat-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,9,26,.95) 0%,transparent 60%)}
+.cat-badge{position:absolute;top:12px;left:12px;background:#dc2626;color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;z-index:2}
+.cat-badge.live{animation:pulse-red 1.5s ease-in-out infinite}
+.live-dot{display:inline-block;width:8px;height:8px;background:#FF3B3B;border-radius:50%;margin-right:5px;animation:pulse-dot 1.5s ease-in-out infinite}
+@keyframes pulse-dot{0%{transform:scale(1);opacity:1;box-shadow:0 0 0 0 rgba(255,59,59,0.7)}50%{transform:scale(1.2);opacity:.9;box-shadow:0 0 0 6px rgba(255,59,59,0)}100%{transform:scale(1);opacity:1;box-shadow:0 0 0 0 rgba(255,59,59,0)}}
+.cat-badge.novo{background:var(--cyan);color:var(--navy)}
+@keyframes pulse-red{0%,100%{opacity:1}50%{opacity:.45}}
+.cat-info{position:absolute;bottom:16px;left:12px;right:12px;z-index:2}
+.cat-title{color:#fff;font-weight:700;font-size:18px;line-height:1.2}
+.cat-sub{color:var(--cyan);font-size:12px;margin-top:4px}
+.cat-count{color:var(--gray);font-size:11px;margin-top:3px}
+@media(max-width:768px){.cat-card{width:160px;height:220px}.cat-title{font-size:14px}}
+
+/* ── RATINGS STRIP ── */
+#ratings-strip{background:#070F2B;height:80px;display:flex;align-items:center;justify-content:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.ratings-inner{display:flex;align-items:center;max-width:900px;width:100%;padding:0 24px}
+.rating-metric{flex:1;text-align:center}
+.rating-metric .rnum{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--cyan);display:block;line-height:1}
+.rating-metric .rlabel{color:var(--gray);font-size:12px;margin-top:2px}
+.rating-divider{width:1px;height:40px;background:var(--border);flex-shrink:0}
+
+/* ── SECTION COMMON ── */
+section{padding:80px 24px}
+.section-title{font-size:clamp(28px,4vw,40px);margin-bottom:8px}
+.section-sub{color:var(--gray);font-size:15px;margin-bottom:40px}
+.section-header{max-width:1200px;margin:0 auto 0}
+
+/* ── CAROUSELS ── */
+.carousel-section{padding:60px 0;overflow:hidden}
+.carousel-header{max-width:1200px;margin:0 auto;padding:0 24px 20px}
+.carousel-header h2{font-size:clamp(22px,3vw,32px)}
+.carousel-wrapper{overflow:hidden;mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 5%,black 95%,transparent)}
+.carousel-track{display:flex;gap:12px;width:max-content;padding:8px 0}
+.carousel-track:hover{animation-play-state:paused!important}
+@keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes scroll-right{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.card-wrap{position:relative;flex-shrink:0;cursor:pointer}
+.card-wrap:hover .card-overlay{opacity:1}
+.card-wrap:hover .card-img{transform:scale(1.05)}
+.card-img{width:150px;height:220px;border-radius:8px;object-fit:cover;transition:transform .3s;display:block}
+.card-overlay{position:absolute;inset:0;border-radius:8px;background:rgba(0,212,255,0.75);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;font-size:40px}
+.card-fallback{width:150px;height:220px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;text-align:center;padding:8px;color:var(--white);flex-shrink:0}
+.badge-live{position:absolute;top:8px;left:8px;background:var(--cyan);color:var(--navy);font-size:9px;font-weight:700;padding:3px 7px;border-radius:4px;animation:pulse-badge 1.5s ease-in-out infinite}
+@keyframes pulse-badge{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ── PLATFORMS ── */
+#platforms{padding:60px 24px;text-align:center;background:var(--navy2)}
+#platforms h2{font-size:clamp(22px,3vw,32px);margin-bottom:32px}
+.marquee-wrap{overflow:hidden;mask-image:linear-gradient(to right,transparent,black 8%,black 92%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,black 8%,black 92%,transparent)}
+.marquee-track{display:flex;gap:20px;width:max-content;animation:scroll-left 28s linear infinite;align-items:center}
+.marquee-track:hover{animation-play-state:paused}
+.platform-logo-wrap{background:#fff;border-radius:8px;padding:8px 14px;height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s;cursor:pointer}
+.platform-logo-wrap:hover{transform:scale(1.05);box-shadow:0 0 16px rgba(0,212,255,0.4)}
+.platform-logo-wrap img{height:30px;width:auto;object-fit:contain;display:block}
+.platform-logo-wrap .logo-fallback{font-weight:700;font-size:13px;color:#333;white-space:nowrap}
+
+/* ── APP MOCKUP ── */
+#app-mockup{background:var(--navy);text-align:center}
+.mockup-tv-container{max-width:800px;margin:0 auto 40px;position:relative}
+.mockup-tv-frame{background:#111;border:8px solid #222;border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6),var(--glow)}
+.mockup-tv-stand{width:140px;height:14px;background:#1a1a1a;margin:0 auto;border-radius:0 0 8px 8px}
+.mockup-tv-stand::after{content:'';display:block;width:200px;height:6px;background:#111;margin:-6px auto 0;border-radius:0 0 8px 8px}
+.mockup-nav{background:#0a0a0a;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05)}
+.mockup-nav-logo{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--cyan)}
+.mockup-nav-links{display:flex;gap:16px}
+.mockup-nav-links span{font-size:11px;color:rgba(255,255,255,.5)}
+.mockup-nav-links span:first-child{color:var(--white)}
+.mockup-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:10px;background:#0d0d0d}
+.mockup-poster{aspect-ratio:2/3;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:4px;overflow:hidden}
+.mockup-poster img{width:100%;height:100%;object-fit:cover}
+.mockup-devices-row{display:flex;justify-content:center;gap:32px;margin-bottom:28px;flex-wrap:wrap}
+.mockup-device-icon{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--gray);font-size:13px}
+.mockup-device-icon span:first-child{font-size:32px}
+.mockup-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.mockup-badge{background:#0D1E45;border:1px solid var(--border);border-radius:100px;padding:6px 16px;font-size:13px;font-weight:600;color:var(--gray)}
+.mockup-badge span{color:var(--cyan)}
+
+/* ── BRAND FEATURES ── */
+#brand{background:var(--navy2)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1200px;margin:0 auto}
+.feature-card{background:#0D1E45;border:1px solid var(--border);border-radius:12px;padding:28px;transition:all .3s}
+.feature-card:hover{border-color:var(--cyan);box-shadow:var(--glow);transform:translateY(-4px)}
+.feature-icon{font-size:36px;margin-bottom:12px}
+.feature-card h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.feature-card p{color:var(--gray);font-size:14px;line-height:1.6}
+
+/* ── STATS ── */
+#stats{background:var(--navy);text-align:center}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;max-width:1000px;margin:0 auto}
+.stat-number{font-size:clamp(48px,6vw,72px);color:var(--cyan);display:block;line-height:1}
+.stat-label{color:var(--gray);font-size:15px;margin-top:6px}
+
+/* ── PRICE COMPARISON ── */
+#compare{background:var(--navy2);text-align:center}
+.compare-inner{max-width:720px;margin:0 auto}
+.compare-list{background:#0D1E45;border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:24px}
+.compare-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:16px}
+.compare-row:last-child{border-bottom:none}
+.compare-row .service{color:var(--gray);display:flex;align-items:center;gap:8px}
+.compare-logo{height:22px;width:auto;border-radius:4px;background:#fff;padding:2px 5px;object-fit:contain;flex-shrink:0}
+.compare-logo-fb{display:inline-flex;align-items:center;justify-content:center;height:22px;min-width:50px;border-radius:4px;background:#fff;padding:2px 6px;font-size:10px;font-weight:700;color:#333;flex-shrink:0}
+.compare-row .price{font-weight:700;flex-shrink:0}
+.compare-divider{border:none;border-top:2px solid var(--cyan);margin:0}
+.compare-total-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0 0;font-size:18px}
+.compare-total{font-size:clamp(32px,5vw,48px);color:#ff4444;text-decoration:line-through;animation:shake 3s ease-in-out infinite;font-family:'Bebas Neue',sans-serif}
+@keyframes shake{0%,90%,100%{transform:translateX(0)}92%{transform:translateX(-4px)}94%{transform:translateX(4px)}96%{transform:translateX(-3px)}98%{transform:translateX(3px)}}
+.arrow-down{font-size:40px;color:var(--cyan);animation:bounce-arrow 1.5s ease-in-out infinite;display:block;margin:8px 0}
+@keyframes bounce-arrow{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.compare-buetv{background:linear-gradient(135deg,#0A1F4E,#070F2B);border:2px solid var(--cyan);border-radius:16px;padding:36px;box-shadow:var(--glow)}
+.compare-buetv h3{font-size:clamp(20px,3vw,26px);font-weight:700;margin-bottom:4px;letter-spacing:1px}
+.compare-buetv-price{font-size:clamp(64px,10vw,100px);color:var(--cyan);line-height:1;margin:8px 0}
+.compare-save{color:#22c55e;font-size:18px;font-weight:700;margin-bottom:20px}
+.btn-whatsapp{background:#25D366;color:var(--white);font-weight:700;padding:14px 36px;border-radius:8px;font-size:16px;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:10px}
+.btn-whatsapp:hover{background:#1da851;transform:translateY(-2px);box-shadow:0 4px 20px rgba(37,211,102,0.4)}
+
+/* ── COMPARE V2 ── */
+#compare{background:var(--navy2);text-align:center}
+#compare .section-badge{display:inline-block;background:#FF8C00;color:#fff;font-size:12px;font-weight:700;letter-spacing:2px;padding:5px 14px;border-radius:100px;margin-bottom:16px;text-transform:uppercase}
+#compare h2{font-size:clamp(28px,5vw,44px);margin-bottom:40px;font-family:'Bebas Neue',sans-serif}
+.cmp2-inner{display:flex;align-items:stretch;justify-content:center;gap:0;max-width:1000px;margin:0 auto;flex-wrap:wrap}
+.cmp2-table{background:#0A1530;border:1px solid rgba(255,68,68,0.3);border-radius:16px 0 0 16px;padding:28px 24px;flex:1;min-width:280px}
+@media(max-width:700px){.cmp2-table{border-radius:16px;margin-bottom:12px}}
+.cmp2-table-header{background:#dc2626;color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;padding:8px 14px;border-radius:8px;margin-bottom:18px;text-align:center}
+.cmp2-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 8px}
+.cmp2-col{display:flex;flex-direction:column;gap:0}
+.cmp2-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.cmp2-row:last-child{border-bottom:none}
+.cmp2-logo{width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:center;background:white;padding:3px;flex-shrink:0}
+.cmp2-name{font-size:12px;color:var(--gray);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmp2-price{font-size:12px;color:#ff6b6b;font-weight:600;flex-shrink:0;white-space:nowrap}
+.cmp2-total-row{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:12px;border-top:2px solid rgba(255,68,68,0.4);gap:8px}
+.cmp2-total-label{font-size:12px;color:var(--gray);font-weight:700;letter-spacing:1px}
+.cmp2-total-val{font-family:'Bebas Neue',sans-serif;font-size:32px;color:#ff4444;text-decoration:line-through;animation:shake 3s ease-in-out infinite}
+.cmp2-annual{color:#ff6b6b;font-size:12px;font-weight:600;margin-top:8px;text-align:center;background:rgba(220,38,38,0.1);border-radius:6px;padding:6px 10px}
+.cmp2-vs-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 12px;gap:12px;flex-shrink:0}
+@media(max-width:700px){.cmp2-vs-wrap{flex-direction:row;padding:12px 0;width:100%;justify-content:center}}
+.cmp2-vs-circle{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--cyan-dark));color:var(--navy);font-family:'Bebas Neue',sans-serif;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(0,212,255,0.5);flex-shrink:0}
+.cmp2-economy-badge{background:rgba(34,197,94,0.15);border:1px solid #22c55e;color:#22c55e;font-size:11px;font-weight:700;padding:5px 10px;border-radius:8px;text-align:center;white-space:nowrap}
+.cmp2-buetv{background:linear-gradient(135deg,#0A1F4E,#070F2B);border:2px solid var(--cyan);border-radius:0 16px 16px 0;padding:28px 24px;flex:1;min-width:280px;box-shadow:var(--glow);display:flex;flex-direction:column;gap:12px}
+@media(max-width:700px){.cmp2-buetv{border-radius:16px}}
+.cmp2-buetv-main{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cmp2-buetv-left{flex:1}
+.cmp2-buetv-right{flex-shrink:0;text-align:right}
+.cmp2-buetv-check{color:var(--cyan);font-size:13px;font-weight:700}
+.cmp2-buetv-sub{color:var(--gray);font-size:12px;margin-top:4px;line-height:1.4}
+.cmp2-buetv-price{font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--cyan);line-height:1}
+.cmp2-buetv-mo{color:var(--gray);font-size:16px;font-weight:600}
+.cmp2-save-card{background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(0,212,255,0.1));border:1px solid rgba(34,197,94,0.4);border-radius:10px;padding:12px 16px;text-align:center}
+.cmp2-save-title{color:#22c55e;font-size:16px;font-weight:700}
+.cmp2-save-sub{color:var(--gray);font-size:12px;margin-top:3px}
+.cmp2-checks{display:grid;grid-template-columns:1fr 1fr;gap:6px 8px}
+.cmp2-checks span{color:var(--white);font-size:12px;display:flex;align-items:center;gap:5px}
+.cmp2-checks span::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0}
+.cmp2-btn{display:block;background:linear-gradient(90deg,#25D366,#1da851);color:#fff;font-weight:700;font-size:15px;padding:14px 20px;border-radius:8px;text-align:center;transition:all .2s;box-shadow:0 4px 20px rgba(37,211,102,0.35)}
+.cmp2-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(37,211,102,0.55)}
+.cmp2-microcopy{color:var(--gray);font-size:11px;text-align:center}
+@media(max-width:768px){
+  #compare{padding:40px 16px}
+  .cmp2-inner{max-width:100%;overflow-x:hidden}
+  .cmp2-table{max-width:100%;overflow-x:hidden;padding:20px 16px}
+  .cmp2-grid{grid-template-columns:1fr}
+  .cmp2-col{width:100%}
+  .cmp2-row{display:flex;align-items:center;gap:8px;padding:8px 0}
+  .cmp2-name{flex:1}
+  .cmp2-price{font-size:13px;flex-shrink:0}
+  .cmp2-total-val{font-size:32px}
+  .cmp2-buetv{max-width:100%;overflow-x:hidden;padding:20px 16px}
+  .cmp2-buetv-main{flex-wrap:wrap}
+}
+
+/* ── DEVICES ── */
+#devices{background:var(--navy);text-align:center}
+.devices-row{display:flex;flex-wrap:wrap;justify-content:center;gap:24px;max-width:1100px;margin:0 auto 32px}
+.device{display:flex;flex-direction:column;align-items:center;gap:12px}
+.device-mock{background:#0D1E45;border:2px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.device-screen{background:#000;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;color:var(--cyan);font-size:11px;letter-spacing:1px;text-align:center}
+.tv-mock .device-mock{width:160px;height:100px;border-radius:8px;padding:6px}
+.tv-mock .device-screen{width:100%;height:100%;border-radius:4px}
+.phone-mock .device-mock{width:68px;height:130px;border-radius:20px;padding:6px}
+.phone-mock .device-screen{width:100%;height:100%;border-radius:14px;font-size:9px}
+.tablet-mock .device-mock{width:110px;height:140px;border-radius:16px;padding:8px}
+.tablet-mock .device-screen{width:100%;height:100%;border-radius:10px;font-size:10px}
+.pc-mock .device-mock{width:150px;height:100px;border-radius:4px;padding:6px}
+.pc-mock .device-mock::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:60px;height:6px;background:var(--blue);border-radius:0 0 4px 4px}
+.pc-mock .device-screen{width:100%;height:100%;border-radius:2px}
+.box-mock .device-mock{width:120px;height:60px;border-radius:8px;padding:5px}
+.box-mock .device-screen{width:100%;height:100%;border-radius:4px}
+.device-label{color:var(--gray);font-size:13px;font-weight:600}
+.devices-compat{color:var(--gray);font-size:14px;max-width:700px;margin:0 auto}
+.devices-compat span{color:var(--cyan)}
+
+/* ── PLANS ── */
+#plans{background:var(--navy2);text-align:center}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:1000px;margin:0 auto 28px}
+.plan-card{background:#0D1E45;border:1px solid var(--border);border-radius:16px;padding:32px 24px;position:relative;transition:all .3s}
+.plan-card.featured{border-color:var(--cyan);box-shadow:var(--glow);transform:scale(1.03)}
+.plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--cyan);color:var(--navy);font-size:11px;font-weight:700;padding:4px 16px;border-radius:100px;white-space:nowrap;letter-spacing:1px}
+.plan-name{font-size:20px;font-weight:700;margin-bottom:8px}
+.plan-price{font-size:clamp(48px,6vw,64px);color:var(--cyan);line-height:1}
+.plan-price-sub{color:var(--gray);font-size:13px;margin-bottom:20px}
+.plan-features{list-style:none;text-align:left;margin-bottom:24px}
+.plan-features li{padding:8px 0;border-bottom:1px solid var(--border);color:var(--gray);font-size:14px;display:flex;gap:8px}
+.plan-features li::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0}
+.plans-note{color:var(--gray);font-size:14px;margin-top:8px}
+
+/* ── STATS BAR ── */
+#stats-bar{background:#070F2B;padding:14px 24px;border-top:1px solid rgba(0,212,255,0.15);border-bottom:1px solid rgba(0,212,255,0.15)}
+.sbar-inner{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+.sbar-item{font-size:14px;color:var(--gray);display:flex;align-items:center;gap:6px}
+.sbar-num{color:var(--cyan);font-weight:700}
+.sbar-sep{color:rgba(0,212,255,0.3);font-size:18px;flex-shrink:0}
+
+/* ── DEVICES 5 CARDS ── */
+#devices5{background:var(--navy);text-align:center}
+.dev5-row{display:flex;gap:16px;justify-content:center;max-width:1200px;margin:0 auto;overflow-x:auto;padding-bottom:8px}
+.dev5-card{background:#0D1E45;border:1px solid var(--border);border-radius:12px;overflow:hidden;width:200px;flex-shrink:0;transition:all .3s;cursor:pointer}
+.dev5-card:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:var(--glow)}
+.dev5-img-wrap{position:relative;height:180px;background:#0A1530;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.dev5-img-wrap img{width:100%;height:180px;object-fit:cover;display:block;border-radius:8px 8px 0 0}
+.dev5-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(4,9,26,.8) 0%,transparent 60%)}
+.dev5-gradient{background:linear-gradient(135deg,#0A1F4E,#070F2B)}
+.dev5-gradient-fire{background:linear-gradient(135deg,#1a0a00,#3d1a00)}
+.dev5-css-icon{font-size:48px;position:relative;z-index:1}
+.dev5-badge{position:absolute;top:10px;right:10px;background:#16a34a;color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;z-index:2;letter-spacing:.5px}
+.dev5-body{padding:14px}
+.dev5-icon{font-size:20px;margin-bottom:4px}
+.dev5-title{font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px}
+.dev5-sub{font-size:11px;color:var(--gray);margin-bottom:10px}
+.dev5-features{list-style:none;text-align:left}
+.dev5-features li{font-size:11px;color:var(--gray);padding:3px 0;display:flex;gap:5px}
+.dev5-features li::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0}
+@media(max-width:768px){.dev5-row{justify-content:flex-start;padding:0 16px 12px}}
+.dev5-hover-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.3s ease;z-index:3;border-radius:8px 8px 0 0}
+.dev5-img-wrap:hover .dev5-hover-overlay{opacity:1}
+.dev5-install-btn{background:#00D4FF;color:#04091A;font-weight:700;font-size:14px;padding:10px 24px;border:none;border-radius:6px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.dev5-install-btn:hover{background:#00BBDD;transform:scale(1.05)}
+/* ── DEVICE MODALS ── */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;animation:fadeIn 0.2s ease}
+.modal-card{background:#0D1E45;border:1px solid rgba(0,212,255,0.3);border-radius:16px;padding:24px;max-width:480px;width:90%;max-height:90vh;overflow-y:auto;position:relative;animation:slideUp 0.3s ease}
+.modal-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,0.1);border:none;color:white;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.modal-close:hover{background:rgba(255,255,255,0.2)}
+.modal-img{width:100%;border-radius:8px;object-fit:cover;height:160px;display:block;margin-bottom:16px}
+.modal-icon-title{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.modal-icon{font-size:24px;color:var(--cyan)}
+.modal-title{font-size:22px;font-weight:700}
+.modal-sub{color:var(--gray);font-size:14px;margin-bottom:12px}
+.modal-badge{display:inline-block;background:rgba(34,197,94,0.15);border:1px solid #22c55e;color:#22c55e;font-size:12px;font-weight:700;padding:4px 12px;border-radius:100px;margin-bottom:14px}
+.modal-features{list-style:none;margin-bottom:16px}
+.modal-features li{color:var(--gray);font-size:14px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;gap:8px}
+.modal-features li::before{content:'⊙';color:var(--cyan);flex-shrink:0}
+.modal-promo{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:14px;color:var(--white);line-height:1.5}
+.modal-wa-btn{display:block;background:#25D366;color:#fff;font-weight:700;font-size:15px;padding:14px 20px;border-radius:8px;text-align:center;margin-bottom:10px;transition:all .2s;text-decoration:none}
+.modal-wa-btn:hover{background:#1da851;transform:translateY(-2px);box-shadow:0 4px 20px rgba(37,211,102,0.4)}
+.modal-microcopy{color:var(--gray);font-size:12px;text-align:center;line-height:1.5}
+
+/* ── PLANS IMPROVEMENTS ── */
+.plan-top-badge{display:inline-block;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:.5px}
+.plan-top-green{background:rgba(34,197,94,0.1);border:1px solid #22c55e;color:#22c55e}
+.plan-top-cyan{background:rgba(0,212,255,0.1);border:1px solid var(--cyan);color:var(--cyan)}
+.plan-period{color:var(--gray);font-size:12px;margin-bottom:8px}
+.plan-old-price{color:var(--gray);font-size:14px;text-decoration:line-through;margin-bottom:4px}
+.plan-day-price{color:var(--cyan);font-size:12px;font-weight:600;margin-bottom:16px}
+.plan-vs-badge{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:6px;font-size:11px;color:var(--cyan);padding:6px 10px;margin-bottom:14px;line-height:1.4}
+.plan-btn-primary{display:block;background:linear-gradient(90deg,#00D4FF,#0099BB);color:var(--navy);font-weight:700;font-size:15px;padding:13px 20px;border-radius:8px;text-align:center;margin-bottom:8px;transition:all .2s;box-shadow:0 4px 20px rgba(0,212,255,0.35)}
+.plan-btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,212,255,0.55)}
+.plan-btn-outline{display:block;border:2px solid var(--cyan);color:var(--cyan);font-weight:700;font-size:14px;padding:11px 20px;border-radius:8px;text-align:center;margin-bottom:8px;transition:all .2s}
+.plan-btn-outline:hover{background:rgba(0,212,255,0.1)}
+.plan-btn-amber{display:block;background:linear-gradient(90deg,#f59e0b,#d97706);color:var(--navy);font-weight:700;font-size:15px;padding:13px 20px;border-radius:8px;text-align:center;margin-bottom:8px;transition:all .2s;box-shadow:0 4px 20px rgba(245,158,11,0.35)}
+.plan-btn-amber:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(245,158,11,0.55)}
+.plan-btn-secondary{display:block;border:1px solid var(--border);color:var(--gray);font-size:13px;padding:9px 20px;border-radius:8px;text-align:center;margin-bottom:10px;transition:all .2s}
+.plan-btn-secondary:hover{border-color:var(--cyan);color:var(--cyan)}
+.plan-microcopy{color:var(--gray);font-size:11px;text-align:center}
+.plan-amber{border-color:rgba(245,158,11,0.3)}
+.plan-amber:hover{border-color:#f59e0b;box-shadow:0 0 30px rgba(245,158,11,0.2)}
+.plans-urgency{max-width:620px;margin:32px auto 24px;background:#0D1E45;border:2px solid #FF8C00;border-radius:12px;padding:20px 24px;display:flex;align-items:center;gap:16px;text-align:left}
+.plans-urg-fire{font-size:32px;flex-shrink:0}
+.plans-urg-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px}
+.plans-urg-sub{font-size:13px;color:var(--gray)}
+.plans-urg-sub span{color:var(--cyan);font-weight:700}
+.pay-section{max-width:700px;margin:0 auto 32px}
+.pay-title{font-size:13px;font-weight:700;color:var(--gray);margin-bottom:14px;text-align:center;letter-spacing:1px;text-transform:uppercase}
+.pay-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}
+@media(max-width:600px){.pay-grid{grid-template-columns:repeat(2,1fr)}}
+.pay-card{background:#070F2B;border:1px solid var(--border);border-radius:8px;padding:14px 10px;text-align:center}
+.pay-icon{font-size:22px;display:block;margin-bottom:6px}
+.pay-name{font-size:13px;font-weight:700;color:var(--white);margin-bottom:2px}
+.pay-sub{font-size:11px;color:var(--gray)}
+.pay-secure{font-size:12px;color:var(--gray);text-align:center}
+
+/* ── HOW IT WORKS ── */
+#how{background:var(--navy)}
+.steps-row{display:flex;align-items:flex-start;justify-content:center;gap:0;max-width:900px;margin:0 auto;flex-wrap:wrap}
+.step{flex:1;min-width:220px;text-align:center;padding:0 16px;position:relative}
+.step:not(:last-child)::after{content:'';position:absolute;top:40px;right:-20px;width:40px;height:2px;background:linear-gradient(to right,var(--cyan),transparent);display:block}
+.step-num{width:80px;height:80px;border-radius:50%;border:2px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--cyan);margin:0 auto 16px;box-shadow:var(--glow)}
+.step h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.step p{color:var(--gray);font-size:14px;line-height:1.6}
+
+/* ── TESTIMONIALS ── */
+#testimonials{background:var(--navy2);text-align:center}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1000px;margin:0 auto}
+.testi-card{background:#0D1E45;border:1px solid var(--border);border-radius:12px;padding:28px;text-align:left}
+.testi-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.testi-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0}
+.testi-name{font-weight:700;font-size:16px}
+.testi-city{color:var(--gray);font-size:13px}
+.testi-stars{color:#f59e0b;font-size:16px;margin-bottom:10px}
+.testi-text{color:var(--gray);font-size:14px;line-height:1.7;font-style:italic}
+
+/* ── FAQ ── */
+#faq{background:var(--navy)}
+.faq-list{max-width:760px;margin:0 auto}
+.faq-item{border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden}
+.faq-question{width:100%;background:none;border:none;color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;padding:18px 20px;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;transition:background .2s}
+.faq-question:hover{background:rgba(0,212,255,0.05)}
+.faq-toggle{font-size:22px;color:var(--cyan);transition:transform .3s;flex-shrink:0}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.faq-answer.open{max-height:300px;padding:0 20px 18px}
+.faq-answer p{color:var(--gray);font-size:15px;line-height:1.7}
+
+/* ── CTA FINAL ── */
+#cta-final{background:radial-gradient(ellipse 80% 70% at 50% 50%,var(--blue) 0%,var(--navy) 100%);text-align:center;padding:100px 24px}
+#cta-final h2{font-size:clamp(36px,5vw,64px);margin-bottom:16px}
+#cta-final p{color:var(--gray);font-size:17px;margin-bottom:32px}
+
+/* ── FOOTER ── */
+footer{background:var(--navy2);border-top:1px solid var(--border);padding:48px 24px 32px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;margin-bottom:32px}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;margin-bottom:10px}
+.footer-logo span{color:var(--cyan)}
+.footer-desc{color:var(--gray);font-size:14px;line-height:1.7}
+.footer-col h4{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--cyan);margin-bottom:14px}
+.footer-col a{display:block;color:var(--gray);font-size:14px;margin-bottom:8px;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-bottom p{color:var(--gray);font-size:13px}
+
+/* ── WHATSAPP FLOAT ── */
+#wa-float{position:fixed;bottom:28px;right:28px;z-index:2000;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.5);cursor:pointer;animation:wa-pulse 2.5s ease-in-out infinite;text-decoration:none}
+@keyframes wa-pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.5),0 0 0 0 rgba(37,211,102,0.4)}60%{box-shadow:0 4px 20px rgba(37,211,102,0.5),0 0 0 14px rgba(37,211,102,0)}}
+#wa-float svg{width:32px;height:32px;fill:var(--white)}
+
+/* ── SOCIAL PROOF POPUP ── */
+#social-popup{position:fixed;bottom:20px;left:20px;z-index:3000;max-width:280px;width:calc(100vw - 40px);background:#0D1E45;border:1px solid rgba(0,212,255,0.3);border-radius:12px;padding:12px 16px;display:none;box-shadow:0 4px 24px rgba(0,0,0,0.5);align-items:center;gap:10px}
+#social-popup.show{display:flex;animation:slide-in-popup .4s ease}
+#social-popup.hide{animation:slide-out-popup .4s ease forwards}
+@keyframes slide-in-popup{from{transform:translateX(-120%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slide-out-popup{from{transform:translateX(0);opacity:1}to{transform:translateX(-120%);opacity:0}}
+.popup-avatar{width:40px;height:40px;border-radius:50%;border:2px solid var(--cyan);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;color:#fff}
+.popup-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.popup-body{flex:1;min-width:0}
+.popup-name{font-size:13px;font-weight:700;color:var(--white)}
+.popup-action{font-size:12px;color:var(--gray);margin-top:1px}
+.popup-time{font-size:11px;color:var(--cyan);margin-top:2px}
+.popup-close{background:none;border:none;color:var(--gray);cursor:pointer;font-size:18px;padding:0;flex-shrink:0;align-self:flex-start;line-height:1;transition:color .2s}
+.popup-close:hover{color:var(--white)}
+
+/* ── COOKIE BANNER ── */
+#cookie-banner{position:fixed;bottom:0;left:0;width:100%;background:var(--navy2);border-top:1px solid var(--border);padding:16px 24px;z-index:1500;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+#cookie-banner p{color:var(--gray);font-size:14px;flex:1;min-width:200px}
+#cookie-banner p a{color:var(--cyan);text-decoration:underline}
+.cookie-btns{display:flex;gap:10px;flex-shrink:0}
+.btn-cookie-accept{background:var(--cyan);color:var(--navy);font-weight:700;padding:8px 20px;border-radius:6px;border:none;cursor:pointer;font-size:14px}
+.btn-cookie-reject{background:transparent;color:var(--gray);border:1px solid var(--border);padding:8px 16px;border-radius:6px;cursor:pointer;font-size:14px}
+#cookie-banner.hidden{display:none}
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── DEVICES NEW ── */
+.dev-cards-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1000px;margin:0 auto 32px}
+.dev-card{background:#0D1E45;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s}
+.dev-card:hover{border-color:var(--cyan);box-shadow:var(--glow);transform:translateY(-4px)}
+.dev-card img{height:200px;width:100%;object-fit:cover;border-radius:8px 8px 0 0;display:block}
+.dev-card-body{padding:20px}
+.dev-icon{font-size:28px;color:var(--cyan);margin-bottom:8px}
+.dev-title{font-weight:700;font-size:18px;margin-bottom:6px;color:var(--white)}
+.dev-desc{color:var(--gray);font-size:14px;line-height:1.6}
+.dev-metrics-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:1000px;margin:0 auto}
+.dev-metric{background:#070F2B;border:1px solid rgba(0,212,255,0.08);border-radius:12px;padding:24px;text-align:center}
+.dev-metric-icon{font-size:24px;margin-bottom:8px}
+.dev-metric-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--cyan);line-height:1;margin-bottom:4px}
+.dev-metric-label{color:var(--gray);font-size:14px}
+@media(max-width:768px){
+  .dev-cards-row{grid-template-columns:1fr}
+  .dev-metrics-row{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){.dev-metrics-row{grid-template-columns:repeat(2,1fr)}}
+
+/* ── AVATAR PHOTO STYLES ── */
+.avatar-wrap{width:44px;height:44px;border-radius:50%;border:2px solid #04091A;margin-left:-8px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;flex-shrink:0}
+.avatar-wrap:first-child{margin-left:0}
+.avatar-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.testi-avatar-wrap{width:56px;height:56px;border-radius:50%;border:2px solid var(--cyan);overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,var(--cyan),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff}
+.testi-avatar-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  section{padding:60px 16px}
+  .step:not(:last-child)::after{display:none}
+  .steps-row{gap:32px}
+  .compare-row{font-size:14px}
+  #cta-final{padding:70px 16px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .device-label{font-size:11px}
+  .mockup-grid{grid-template-columns:repeat(4,1fr)}
+  .mockup-poster:nth-child(n+5){display:none}
+}
+@media(max-width:480px){
+  .hero-btns{flex-direction:column;align-items:center}
+  .btn-primary,.btn-outline{width:100%;max-width:300px;text-align:center;justify-content:center}
+  .cat-cards-row{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding:0 16px;scrollbar-width:none}
+  .cat-cards-row::-webkit-scrollbar{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- URGENCY BAR -->
+<div id="urgency-bar">
+  <div class="urgency-inner">
+    <div class="urg-item urg-countdown">⏱ <span id="countdown">01:43:27</span></div>
+    <div class="urg-item urg-online">🟢 <span id="online-count-bar">4.200</span> pessoas online agora</div>
+    <div class="urg-item urg-cta"><a href="javascript:void(0)" onclick="abrirModalCadastro()">🎁 TESTE GRÁTIS →</a></div>
+    <div class="urg-item urg-scarcity">🔥 Só restam 3 vagas!</div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<!-- HERO -->
+<section id="hero">
+  <div class="particles" id="particles"></div>
+  <div style="position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 16px">
+    <div class="hero-badge">✦ SERVIÇO LICENCIADO ✦</div><br>
+    <div class="hero-online-badge"><span class="hero-online-dot"></span>🟢 <span id="online-count-hero">4.200</span> pessoas a assistir agora</div>
+    <h1 class="hero-title">Tudo o que assistes hoje,<br>num só lugar.</h1>
+    <div class="hero-social-proof">
+      <div class="avatars-row">
+        <div class="avatar-wrap" style="background:linear-gradient(135deg,#1d4ed8,#0ea5e9)">J
+          <img src="fotos/avatar1.jpg" alt="Cliente" onerror="this.style.display='none'">
+        </div>
+        <div class="avatar-wrap" style="background:linear-gradient(135deg,#16a34a,#22c55e)">A
+          <img src="fotos/avatar2.jpg" alt="Cliente" onerror="this.style.display='none'">
+        </div>
+        <div class="avatar-wrap" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">M
+          <img src="fotos/avatar3.jpg" alt="Cliente" onerror="this.style.display='none'">
+        </div>
+        <div class="avatar-wrap" style="background:linear-gradient(135deg,#db2777,#f43f5e)">R
+          <img src="fotos/avatar4.jpg" alt="Cliente" onerror="this.style.display='none'">
+        </div>
+        <div class="avatar-wrap" style="background:linear-gradient(135deg,#ea580c,#f97316)">C
+          <img src="fotos/avatar5.jpg" alt="Cliente" onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div class="proof-text">⭐⭐⭐⭐⭐ <strong>4.9</strong> • +500 clientes satisfeitos na Europa</div>
+    </div>
+    <p class="hero-sub"><span>+12.000 canais</span> • Futebol ao vivo • Filmes • Séries • Animes</p>
+    <div class="hero-btns">
+      <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="btn-primary">⚡ TESTE GRÁTIS AGORA →</a>
+      <a href="#plans" class="btn-outline">Ver Planos</a>
+    </div>
+    <p class="hero-microcopy">Sem cartão · Ativação em 2 min · Cancela quando quiseres</p>
+    <div class="hero-badges">
+      <span class="hero-badge-item">Sem contratos</span>
+      <span class="hero-badge-item">Sem fidelização</span>
+      <span class="hero-badge-item">Suporte 24h</span>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORY CARDS -->
+<div id="category-cards" class="reveal">
+  <div class="cat-cards-row">
+    <div class="cat-card">
+      <img src="fotos/futebol.jpg" alt="Futebol" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0A1F4E,#00D4FF22)'">
+      <div class="cat-card-overlay"></div>
+      <div class="cat-badge live"><span class="live-dot"></span> AO VIVO</div>
+      <div class="cat-info">
+        <div class="cat-title">Futebol</div>
+        <div class="cat-sub">Liga Portugal, Champions e mais</div>
+        <div class="cat-count">+1.100 canais</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img src="fotos/nba.jpg" alt="NBA" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0A1F4E,#00D4FF22)'">
+      <div class="cat-card-overlay"></div>
+      <div class="cat-badge live"><span class="live-dot"></span> AO VIVO</div>
+      <div class="cat-info">
+        <div class="cat-title">NBA</div>
+        <div class="cat-sub">Temporada completa</div>
+        <div class="cat-count">+500 canais</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img src="fotos/ufc.jpg" alt="UFC MMA" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0A1F4E,#00D4FF22)'">
+      <div class="cat-card-overlay"></div>
+      <div class="cat-badge live"><span class="live-dot"></span> AO VIVO</div>
+      <div class="cat-info">
+        <div class="cat-title">UFC / MMA</div>
+        <div class="cat-sub">Combates ao vivo</div>
+        <div class="cat-count">+200 canais</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img src="fotos/formula1.jpg" alt="Fórmula 1" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0A1F4E,#00D4FF22)'">
+      <div class="cat-card-overlay"></div>
+      <div class="cat-badge live"><span class="live-dot"></span> AO VIVO</div>
+      <div class="cat-info">
+        <div class="cat-title">Fórmula 1</div>
+        <div class="cat-sub">Todas as corridas</div>
+        <div class="cat-count">+400 canais</div>
+      </div>
+    </div>
+    <div class="cat-card">
+      <img src="fotos/filmes.jpg" alt="Filmes Séries" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0A1F4E,#00D4FF22)'">
+      <div class="cat-card-overlay"></div>
+      <div class="cat-badge novo">🆕 NOVO</div>
+      <div class="cat-info">
+        <div class="cat-title">Filmes &amp; Séries</div>
+        <div class="cat-sub">Catálogo completo</div>
+        <div class="cat-count">+50.000 títulos</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RATINGS STRIP -->
+<div id="ratings-strip" class="reveal">
+  <div class="ratings-inner">
+    <div class="rating-metric">
+      <span class="rnum">⭐ 4.9/5</span>
+      <div class="rlabel">Avaliação dos clientes</div>
+    </div>
+    <div class="rating-divider"></div>
+    <div class="rating-metric">
+      <span class="rnum">+500</span>
+      <div class="rlabel">Clientes activos na Europa</div>
+    </div>
+    <div class="rating-divider"></div>
+    <div class="rating-metric">
+      <span class="rnum">🌍 15</span>
+      <div class="rlabel">Disponível em 15 países</div>
+    </div>
+  </div>
+</div>
+
+<!-- PLATFORMS MARQUEE -->
+<section id="platforms" class="reveal">
+  <h2>Todas as plataformas num único app</h2>
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marquee-track"></div>
+  </div>
+</section>
+
+<!-- APP MOCKUP -->
+<section id="app-mockup" class="reveal">
+  <div style="text-align:center;margin-bottom:40px">
+    <h2 class="section-title">Interface profissional em qualquer dispositivo</h2>
+    <p class="section-sub">Experiência premium estilo Netflix no teu ecrã</p>
+  </div>
+  <div class="reveal" style="margin-bottom:32px">
+    <img src="fotos/dispositivos.png" style="width:100%;max-width:900px;border-radius:16px;box-shadow:0 20px 60px rgba(0,212,255,0.15);display:block;margin:0 auto;" alt="Interface Buétv" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0A1F4E,#00D4FF22)'">
+  </div>
+  <div class="mockup-badges reveal">
+    <div class="mockup-badge"><span>✓</span> 100% seguro</div>
+    <div class="mockup-badge"><span>✓</span> Zero travamentos</div>
+    <div class="mockup-badge"><span>✓</span> Garantia 7 dias</div>
+    <div class="mockup-badge"><span>✓</span> Sem compromisso</div>
+  </div>
+</section>
+
+<!-- CAROUSEL 1 — FILMES POPULARES (após mockup) -->
+<div class="carousel-section reveal" id="carousel-movies">
+  <div class="carousel-header"><h2>🎬 Filmes Populares</h2></div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="track-movies" style="animation:scroll-left 40s linear infinite"></div>
+  </div>
+</div>
+
+<!-- DEVICES -->
+<section id="devices">
+  <div style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title reveal">Conheça a Buétv</h2>
+    <p class="section-sub reveal">Interface profissional estilo Netflix em qualquer dispositivo</p>
+  </div>
+  <div class="dev-cards-row reveal">
+    <div class="dev-card">
+      <img src="fotos/smarttv.jpg" alt="Smart TV" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0A1F4E,#00D4FF22)'">
+      <div class="dev-card-body">
+        <div class="dev-icon">📺</div>
+        <div class="dev-title">Smart TV</div>
+        <div class="dev-desc">Catálogo completo com +12.000 canais em 4K HDR na tua TV.</div>
+      </div>
+    </div>
+    <div class="dev-card">
+      <img src="fotos/notebook.jpg" alt="Notebook" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0A1F4E,#00D4FF22)'">
+      <div class="dev-card-body">
+        <div class="dev-icon">💻</div>
+        <div class="dev-title">Notebook</div>
+        <div class="dev-desc">Acede pelo navegador — sem instalações, sem limites.</div>
+      </div>
+    </div>
+    <div class="dev-card">
+      <img src="fotos/telemovel.jpg" alt="Telemóvel" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0A1F4E,#00D4FF22)'">
+      <div class="dev-card-body">
+        <div class="dev-icon">📱</div>
+        <div class="dev-title">Telemóvel</div>
+        <div class="dev-desc">Leva no bolso. Assiste em qualquer lugar, a qualquer hora.</div>
+      </div>
+    </div>
+  </div>
+  <div class="dev-metrics-row reveal">
+    <div class="dev-metric"><div class="dev-metric-icon">🎬</div><div class="dev-metric-num">+50.000</div><div class="dev-metric-label">Filmes e séries</div></div>
+    <div class="dev-metric"><div class="dev-metric-icon">📡</div><div class="dev-metric-num">12.000+</div><div class="dev-metric-label">Canais ao vivo</div></div>
+    <div class="dev-metric"><div class="dev-metric-icon">🛡️</div><div class="dev-metric-num">CDN</div><div class="dev-metric-label">Anti-travamento</div></div>
+    <div class="dev-metric"><div class="dev-metric-icon">✨</div><div class="dev-metric-num">4K HDR</div><div class="dev-metric-label">Máxima qualidade</div></div>
+  </div>
+</section>
+
+<!-- BRAND FEATURES -->
+<section id="brand" class="reveal">
+  <div class="features-grid">
+    <div class="feature-card reveal"><div class="feature-icon">📺</div><h3>Canais HD e 4K</h3><p>Mais de 12.000 canais em alta definição e qualidade 4K para uma experiência imersiva em qualquer ecrã.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon">⚽</div><h3>Futebol ao Vivo</h3><p>Liga Portuguesa, Champions League, Premier League e todos os grandes jogos em direto sem falhas.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon">🎬</div><h3>Filmes e Séries</h3><p>Catálogo com mais de 50.000 títulos incluindo os últimos lançamentos e clássicos atemporais.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon">📱</div><h3>Qualquer Dispositivo</h3><p>Compatível com Smart TV, telemóvel, tablet, PC, Fire Stick, TV Box, Apple TV e muito mais.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon">🌍</div><h3>Toda a Europa</h3><p>Funciona em Portugal, Espanha, França, Suíça, Alemanha, Reino Unido e em toda a Europa.</p></div>
+    <div class="feature-card reveal"><div class="feature-icon">💬</div><h3>Suporte 24h</h3><p>Equipa de suporte disponível 24 horas por dia, 7 dias por semana via WhatsApp e email.</p></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div style="text-align:center;margin-bottom:56px">
+    <h2 class="section-title reveal">Números que falam por si</h2>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-item reveal"><span class="stat-number" data-target="12000" data-prefix="+">0</span><div class="stat-label">Canais</div></div>
+    <div class="stat-item reveal"><span class="stat-number" data-target="50000" data-prefix="+">0</span><div class="stat-label">Filmes e Séries</div></div>
+    <div class="stat-item reveal"><span class="stat-number" data-target="24" data-suffix="h">0</span><div class="stat-label">Suporte</div></div>
+    <div class="stat-item reveal"><span class="stat-number" data-target="500" data-prefix="+">0</span><div class="stat-label">Clientes Europa</div></div>
+  </div>
+</section>
+
+<!-- CAROUSEL 2 — SÉRIES (após stats) -->
+<div class="carousel-section reveal" id="carousel-series">
+  <div class="carousel-header"><h2>📺 Séries em Destaque</h2></div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="track-series" style="animation:scroll-right 45s linear infinite"></div>
+  </div>
+</div>
+
+<!-- PRICE COMPARISON -->
+<section id="compare">
+  <!-- Badge topo -->
+  <div style="text-align:center;margin-bottom:20px">
+    <span style="display:inline-block;background:rgba(255,100,0,0.15);border:1px solid #FF6B00;border-radius:20px;padding:6px 16px;color:#FF6B00;font-size:13px;font-weight:700">↓ Estás a deitar dinheiro fora!</span>
+  </div>
+  <!-- Título -->
+  <div style="text-align:center;margin-bottom:40px">
+    <h2 class="section-title reveal">Vê quanto <span style="color:#FF4444">gastas</span> a pagar em separado</h2>
+    <p class="section-sub reveal">Soma todos os streamings que assistes. O resultado vai surpreender-te.</p>
+  </div>
+
+  <div class="cmp2-inner">
+    <!-- Tabela separado -->
+    <div class="cmp2-table reveal">
+      <div class="cmp2-table-header">✕ A pagar em separado, gastas:</div>
+      <div class="cmp2-grid">
+        <!-- Coluna esquerda -->
+        <div class="cmp2-col">
+          <div class="cmp2-row">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" class="cmp2-logo" onerror="this.style.display='none'">
+            <span class="cmp2-name">Netflix</span>
+            <span class="cmp2-price">€17,99/mês</span>
+          </div>
+          <div class="cmp2-row">
+            <img src="fotos/hbo.jpg" alt="HBO Max" class="cmp2-logo" onerror="this.style.display='none'">
+            <span class="cmp2-name">HBO Max</span>
+            <span class="cmp2-price">€9,99/mês</span>
+          </div>
+          <div class="cmp2-row">
+            <img src="fotos/paramount.jpg" alt="Paramount+" class="cmp2-logo" onerror="this.style.display='none'">
+            <span class="cmp2-name">Paramount+</span>
+            <span class="cmp2-price">€7,99/mês</span>
+          </div>
+          <div class="cmp2-row">
+            <img src="https://upload.wikimedia.org/wikipedia/pt/8/88/Sport_TV_Logo.png" alt="Sport TV" class="cmp2-logo" onerror="this.style.display='none'">
+            <span class="cmp2-name">Sport TV</span>
+            <span class="cmp2-price">€19,99/mês</span>
+          </div>
+        </div>
+        <!-- Coluna direita -->
+        <div class="cmp2-col">
+          <div class="cmp2-row">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" class="cmp2-logo" onerror="this.style.display='none'">
+            <span class="cmp2-name">Disney+</span>
+            <span class="cmp2-price">€11,99/mês</span>
+          </div>
+          <div class="cmp2-row">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg" alt="Prime Video" class="cmp2-logo" onerror="this.style.display='none'">
+            <span class="cmp2-name">Prime Video</span>
+            <span class="cmp2-price">€8,99/mês</span>
+          </div>
+          <div class="cmp2-row">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg" alt="Apple TV+" class="cmp2-logo" onerror="this.style.display='none'">
+            <span class="cmp2-name">Apple TV+</span>
+            <span class="cmp2-price">€8,99/mês</span>
+          </div>
+          <div class="cmp2-row">
+            <img src="fotos/crunchyroll.jpg" alt="Crunchyroll" class="cmp2-logo" onerror="this.style.display='none'">
+            <span class="cmp2-name">Crunchyroll</span>
+            <span class="cmp2-price">€6,99/mês</span>
+          </div>
+        </div>
+      </div>
+      <!-- Total -->
+      <div class="cmp2-total-row">
+        <span class="cmp2-total-label">TOTAL/MÊS:</span>
+        <span class="cmp2-total-val">€92,93/MÊS</span>
+      </div>
+      <div class="cmp2-annual">⚠ €1.115,16 por ano deitados fora!</div>
+    </div>
+
+    <!-- Separador VS -->
+    <div class="cmp2-vs-wrap">
+      <div class="cmp2-vs-circle">VS</div>
+      <div class="cmp2-economy-badge">✓ ECONOMIA DE 84%</div>
+    </div>
+
+    <!-- Secção Buétv -->
+    <div class="cmp2-buetv reveal">
+      <div style="text-align:right;margin-bottom:8px">
+        <span style="color:var(--gray);font-size:14px;text-decoration:line-through">€92,93</span>
+      </div>
+      <div class="cmp2-buetv-main">
+        <div class="cmp2-buetv-left">
+          <div class="cmp2-buetv-check">✓ Na Buétv pagas apenas:</div>
+          <div class="cmp2-buetv-sub">Todos os 8 serviços + 12.000 canais ao vivo</div>
+        </div>
+        <div class="cmp2-buetv-right">
+          <span class="cmp2-buetv-price">€15</span><span class="cmp2-buetv-mo">/mês</span>
+        </div>
+      </div>
+      <!-- Card poupança -->
+      <div class="cmp2-save-card">
+        <div class="cmp2-save-title">💰 POUPA €77,93 POR MÊS!</div>
+        <div class="cmp2-save-sub">= €935,16 de poupança por ano!</div>
+      </div>
+      <!-- Grid de checks -->
+      <div class="cmp2-checks">
+        <span>✓ Todos os streamings</span>
+        <span>✓ +12.000 canais ao vivo</span>
+        <span>✓ Zero travamento CDN</span>
+        <span>✓ +50.000 filmes e séries</span>
+        <span>✓ Todos os desportos</span>
+        <span>✓ Qualidade 4K HDR</span>
+        <span>✓ Suporte 24/7</span>
+        <span>✓ Sem contratos</span>
+      </div>
+      <!-- Botão -->
+      <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="cmp2-btn">
+        🎁 TESTE GRÁTIS — COMEÇA AGORA →
+      </a>
+      <div class="cmp2-microcopy">Apenas 3 testes grátis disponíveis · Sem cartão · Garantia 7 dias</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR REAL TIME -->
+<div id="stats-bar">
+  <div class="sbar-inner">
+    <span class="sbar-item">🟢 <span class="sbar-num" id="online-count-stats">4.200</span> a assistir agora</span>
+    <span class="sbar-sep">|</span>
+    <span class="sbar-item">🎬 <span class="sbar-num">+50.000</span> títulos disponíveis</span>
+    <span class="sbar-sep">|</span>
+    <span class="sbar-item">🔄 Actualizado <span class="sbar-num">hoje</span></span>
+  </div>
+</div>
+
+<!-- DEVICES 5 CARDS -->
+<section id="devices5">
+  <div style="text-align:center;margin-bottom:40px">
+    <h2 class="section-title reveal">Funciona em <span style="color:#00D4FF">todos</span> os dispositivos</h2>
+    <p class="section-sub reveal">Clica em qualquer dispositivo para saberes como instalar — teste grátis!</p>
+  </div>
+  <div class="dev5-row">
+    <div class="dev5-card reveal">
+      <div class="dev5-img-wrap">
+        <img src="fotos/card-smarttv.jpg" alt="Smart TV" onerror="this.style.display='none'">
+        <div class="dev5-img-overlay"></div>
+        <span class="dev5-badge">✓ OK</span>
+        <div class="dev5-hover-overlay"><button class="dev5-install-btn" onclick="openDevModal('modal-smarttv')">Como Instalar</button></div>
+      </div>
+      <div class="dev5-body">
+        <div class="dev5-icon">📺</div>
+        <div class="dev5-title">Smart TV</div>
+        <div class="dev5-sub">Samsung, LG, Sony, TCL...</div>
+        <ul class="dev5-features">
+          <li>App próprio instalável</li>
+          <li>Interface igual Netflix</li>
+          <li>Qualidade 4K HDR</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dev5-card reveal">
+      <div class="dev5-img-wrap">
+        <img src="fotos/card-tvbox.jpg" alt="TV Box" onerror="this.style.display='none'">
+        <div class="dev5-img-overlay"></div>
+        <span class="dev5-badge">✓ OK</span>
+        <div class="dev5-hover-overlay"><button class="dev5-install-btn" onclick="openDevModal('modal-tvbox')">Como Instalar</button></div>
+      </div>
+      <div class="dev5-body">
+        <div class="dev5-icon">📦</div>
+        <div class="dev5-title">TV Box</div>
+        <div class="dev5-sub">Android TV Box com Viv...</div>
+        <ul class="dev5-features">
+          <li>Instalação em 2 min</li>
+          <li>Funciona em qualquer TV</li>
+          <li>Controlo remoto</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dev5-card reveal">
+      <div class="dev5-img-wrap">
+        <img src="fotos/card-firestick.jpg" alt="Fire TV Stick" onerror="this.style.display='none'">
+        <div class="dev5-img-overlay"></div>
+        <span class="dev5-badge">✓ OK</span>
+        <div class="dev5-hover-overlay"><button class="dev5-install-btn" onclick="openDevModal('modal-firestick')">Como Instalar</button></div>
+      </div>
+      <div class="dev5-body">
+        <div class="dev5-icon">🔥</div>
+        <div class="dev5-title">Fire TV Stick</div>
+        <div class="dev5-sub">Amazon Fire TV Stick</div>
+        <ul class="dev5-features">
+          <li>Plug &amp; Play na TV</li>
+          <li>App para desktop</li>
+          <li>Controlo por voz</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dev5-card reveal">
+      <div class="dev5-img-wrap">
+        <img src="fotos/card-notebook.jpg" alt="Notebook" onerror="this.style.display='none'">
+        <div class="dev5-img-overlay"></div>
+        <span class="dev5-badge">✓ OK</span>
+        <div class="dev5-hover-overlay"><button class="dev5-install-btn" onclick="openDevModal('modal-notebook')">Como Instalar</button></div>
+      </div>
+      <div class="dev5-body">
+        <div class="dev5-icon">💻</div>
+        <div class="dev5-title">Notebook &amp; PC</div>
+        <div class="dev5-sub">Windows, Mac, Linux</div>
+        <ul class="dev5-features">
+          <li>Acesso pelo navegador</li>
+          <li>App para desktop</li>
+          <li>Sem limite de uso</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dev5-card reveal">
+      <div class="dev5-img-wrap">
+        <img src="fotos/telemovel.jpg" alt="Telemóvel" onerror="this.style.display='none'">
+        <div class="dev5-img-overlay"></div>
+        <span class="dev5-badge">✓ OK</span>
+        <div class="dev5-hover-overlay"><button class="dev5-install-btn" onclick="openDevModal('modal-telemovel')">Como Instalar</button></div>
+      </div>
+      <div class="dev5-body">
+        <div class="dev5-icon">📱</div>
+        <div class="dev5-title">Telemóvel</div>
+        <div class="dev5-sub">Android e iOS</div>
+        <ul class="dev5-features">
+          <li>App na Play Store</li>
+          <li>App na App Store</li>
+          <li>Assiste offline</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAROUSEL 3 — ANIMES (após compare) -->
+<div class="carousel-section reveal" id="carousel-animes">
+  <div class="carousel-header"><h2>⚡ Animes</h2></div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="track-animes" style="animation:scroll-left 35s linear infinite"></div>
+  </div>
+</div>
+
+<!-- PLANS -->
+<section id="plans">
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:20px">
+    <span class="plan-top-badge plan-top-green">💰 Melhor preço da Europa!</span>
+    <span class="plan-top-badge plan-top-cyan">🎁 Teste grátis!</span>
+  </div>
+  <div style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title reveal">Escolhe o teu <span style="color:#00D4FF">plano</span></h2>
+    <p class="section-sub reveal">A partir de €0,33/dia — menos que um café</p>
+    <p class="section-sub reveal" style="color:var(--cyan);font-size:13px;margin-top:8px">✓ Sem fidelidade · Teste grátis · CDN anti-travamento</p>
+  </div>
+  <div class="plans-grid">
+    <!-- BÁSICO -->
+    <div class="plan-card reveal">
+      <div class="plan-badge" style="background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid #22c55e">✓ BOM CUSTO</div>
+      <div class="plan-name">Básico</div>
+      <div class="plan-period">Mensal • 1 ecrã</div>
+      <div class="plan-old-price">€12,99</div>
+      <div class="plan-price">€9,99</div>
+      <div class="plan-price-sub">por mês</div>
+      <div class="plan-day-price">Apenas €0,33/dia</div>
+      <ul class="plan-features">
+        <li>+8.000 canais ao vivo</li>
+        <li>Qualidade Full HD</li>
+        <li>1 ecrã + 1 Telemóvel</li>
+        <li>+30.000 filmes e séries</li>
+        <li>CDN anti-travamento</li>
+        <li>Suporte via WhatsApp</li>
+      </ul>
+      <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="plan-btn-outline">ASSINAR AGORA →</a>
+      <button onclick="openLeadModal()" class="plan-btn-secondary">Teste Grátis</button>
+      <div class="plan-microcopy">Garantia 7 dias · Cancela quando quiser</div>
+    </div>
+    <!-- STANDARD -->
+    <div class="plan-card featured reveal">
+      <div class="plan-badge">⭐ MAIS VENDIDO</div>
+      <div class="plan-name">Standard ⚡</div>
+      <div class="plan-period">Mensal • 2 ecrãs</div>
+      <div class="plan-old-price">€19,99</div>
+      <div class="plan-price" style="font-size:clamp(52px,7vw,72px)">€15,00</div>
+      <div class="plan-price-sub">por mês</div>
+      <div class="plan-day-price">Apenas €0,50/dia</div>
+      <div class="plan-vs-badge">vs Básico: +1 ecrã extra · +20.000 filmes · Sport TV</div>
+      <ul class="plan-features">
+        <li>+12.000 canais ao vivo</li>
+        <li>Qualidade 4K Ultra HD</li>
+        <li>2 ecrãs + 1 Telemóvel</li>
+        <li>+50.000 filmes e séries</li>
+        <li>CDN premium dedicado</li>
+        <li>Todos os streamings</li>
+        <li>Futebol ao vivo incluído</li>
+        <li>Sport TV + Eurosport</li>
+        <li>Suporte prioritário 24/7</li>
+        <li>Animes e documentários</li>
+      </ul>
+      <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="plan-btn-primary">⚡ ASSINAR AGORA →</a>
+      <button onclick="openLeadModal()" class="plan-btn-secondary">Teste Grátis</button>
+      <div class="plan-microcopy">Garantia 7 dias · Cancela quando quiser</div>
+    </div>
+    <!-- FAMÍLIA -->
+    <div class="plan-card plan-amber reveal">
+      <div class="plan-badge" style="background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid #f59e0b">💎 MELHOR CUSTO-BENEFÍCIO</div>
+      <div class="plan-name">Família</div>
+      <div class="plan-period">Mensal • 4 ecrãs</div>
+      <div class="plan-old-price">€34,99</div>
+      <div class="plan-price" style="color:#f59e0b">€24,99</div>
+      <div class="plan-price-sub">por mês</div>
+      <div class="plan-day-price" style="color:#f59e0b">Apenas €0,83/dia</div>
+      <ul class="plan-features">
+        <li>+12.000 canais ao vivo</li>
+        <li>Qualidade 4K Ultra HDR</li>
+        <li>4 ecrãs + 2 Telemóveis</li>
+        <li>+50.000 filmes e séries</li>
+        <li>CDN ultra-rápido dedicado</li>
+        <li>Zero travamento garantido</li>
+        <li>Todos os streamings</li>
+        <li>Todos os desportos</li>
+        <li>Suporte VIP WhatsApp</li>
+        <li>Controlo parental</li>
+        <li>Conteúdos infantis</li>
+        <li>Plano ANUAL disponível</li>
+      </ul>
+      <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="plan-btn-amber">ASSINAR AGORA →</a>
+      <button onclick="openLeadModal()" class="plan-btn-secondary">Teste Grátis</button>
+      <div class="plan-microcopy">Garantia 7 dias · Cancela quando quiser</div>
+    </div>
+  </div>
+  <!-- Urgência abaixo dos planos -->
+  <div class="plans-urgency reveal">
+    <span class="plans-urg-fire">🔥</span>
+    <div>
+      <div class="plans-urg-title">Oferta por tempo <strong>LIMITADO!</strong></div>
+      <div class="plans-urg-sub"><span id="online-count-plans">4.200</span> pessoas a ver esta página. Apenas 3 testes grátis restantes!</div>
+    </div>
+  </div>
+  <!-- Formas de pagamento -->
+  <div class="pay-section">
+    <div class="pay-title">💳 Formas de Pagamento</div>
+    <div class="pay-grid">
+      <div class="pay-card">
+        <span class="pay-icon">📱</span>
+        <div class="pay-name">MB Way</div>
+        <div class="pay-sub">Instantâneo</div>
+      </div>
+      <div class="pay-card">
+        <span class="pay-icon">🏧</span>
+        <div class="pay-name">Multibanco</div>
+        <div class="pay-sub">Todos os bancos</div>
+      </div>
+      <div class="pay-card">
+        <span class="pay-icon">🏦</span>
+        <div class="pay-name">SEPA</div>
+        <div class="pay-sub">Zona Euro</div>
+      </div>
+      <div class="pay-card">
+        <span class="pay-icon">💳</span>
+        <div class="pay-name">Visa / Master</div>
+        <div class="pay-sub">Internacional</div>
+      </div>
+    </div>
+    <div class="pay-secure">🔒 Pagamento seguro · Activação imediata após confirmação</div>
+  </div>
+  <p class="plans-note reveal">🎁 Testa 24h grátis — sem cartão, sem compromisso</p>
+</section>
+
+<!-- CAROUSEL 4 — LANÇAMENTOS (após plans) -->
+<div class="carousel-section reveal" id="carousel-upcoming">
+  <div class="carousel-header"><h2>🆕 Últimos Lançamentos</h2></div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="track-upcoming" style="animation:scroll-right 50s linear infinite"></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div style="text-align:center;margin-bottom:56px">
+    <h2 class="section-title reveal">Como funciona?</h2>
+    <p class="section-sub reveal">Em 3 passos simples estás a ver tudo</p>
+  </div>
+  <div class="steps-row">
+    <div class="step reveal"><div class="step-num">1</div><h3>Fala no WhatsApp</h3><p>Contacta-nos no WhatsApp, escolhe o plano e o período de teste gratuito de 24h.</p></div>
+    <div class="step reveal"><div class="step-num">2</div><h3>Recebe as credenciais</h3><p>Em menos de 5 minutos recebes os teus dados de acesso diretamente no WhatsApp.</p></div>
+    <div class="step reveal"><div class="step-num">3</div><h3>Assiste em qualquer ecrã</h3><p>Configura no teu dispositivo favorito e começa a ver tudo imediatamente.</p></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title reveal">O que dizem os nossos clientes</h2>
+    <p class="section-sub reveal">Mais de 500 clientes satisfeitos em toda a Europa</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-top">
+        <div class="testi-avatar-wrap">M
+          <img src="fotos/cliente1.jpg" alt="Maria S." onerror="this.style.display='none'">
+        </div>
+        <div><div class="testi-name">Maria S.</div><div class="testi-city">Lisboa, Portugal</div></div>
+      </div>
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Cancelei o MEO depois de 8 anos. Com a Buétv tenho muito mais canais e pago muito menos. O suporte é incrível e responde em minutos!"</p>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-top">
+        <div class="testi-avatar-wrap" style="background:linear-gradient(135deg,var(--orange),#8B0000)">J
+          <img src="fotos/cliente2.jpg" alt="João M." onerror="this.style.display='none'">
+        </div>
+        <div><div class="testi-name">João M.</div><div class="testi-city">Porto, Portugal</div></div>
+      </div>
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Uso no telemóvel e na Smart TV ao mesmo tempo. Os jogos do Benfica em 4K, as séries que quero ver, tudo sem falhas. Recomendo a todos!"</p>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-top">
+        <div class="testi-avatar-wrap" style="background:linear-gradient(135deg,#6366f1,var(--cyan-dark))">A
+          <img src="fotos/cliente3.jpg" alt="Ana R." onerror="this.style.display='none'">
+        </div>
+        <div><div class="testi-name">Ana R.</div><div class="testi-city">Paris, França</div></div>
+      </div>
+      <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+      <p class="testi-text">"Emigrei há 3 anos e sentia falta dos canais portugueses. A Buétv resolveu tudo! Tenho RTP, SIC, TVI e os canais de desporto. Melhor investimento!"</p>
+    </div>
+  </div>
+</section>
+
+<!-- CAROUSEL 6 — DESPORTO -->
+<div class="carousel-section reveal" id="carousel-sport">
+  <div class="carousel-header"><h2>⚽ Futebol &amp; Desporto</h2></div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="track-sport" style="animation:scroll-right 42s linear infinite"></div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<section id="faq">
+  <div style="text-align:center;margin-bottom:48px">
+    <h2 class="section-title reveal">Perguntas Frequentes</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal"><button class="faq-question" onclick="toggleFaq(this)">Como funciona o teste grátis de 24h?<span class="faq-toggle">+</span></button><div class="faq-answer"><p>Basta contactares-nos no WhatsApp. Enviamos-te as credenciais de acesso por 24 horas completamente gratuitas, sem precisares de cartão de crédito ou qualquer compromisso. Se gostares, escolhes um plano. Se não, não há qualquer problema.</p></div></div>
+    <div class="faq-item reveal"><button class="faq-question" onclick="toggleFaq(this)">Em quantos dispositivos posso ver ao mesmo tempo?<span class="faq-toggle">+</span></button><div class="faq-answer"><p>Depende do plano escolhido: Básico permite 1 ecrã simultâneo, Standard permite 2 ecrãs e o plano Família permite até 4 ecrãs ao mesmo tempo em dispositivos diferentes.</p></div></div>
+    <div class="faq-item reveal"><button class="faq-question" onclick="toggleFaq(this)">Quais são os métodos de pagamento aceites?<span class="faq-toggle">+</span></button><div class="faq-answer"><p>Aceitamos transferência bancária, MB Way, PayPal e criptomoedas. Todo o processo é feito de forma simples e segura via WhatsApp. Após pagamento, as credenciais são enviadas em menos de 5 minutos.</p></div></div>
+    <div class="faq-item reveal"><button class="faq-question" onclick="toggleFaq(this)">Posso cancelar quando quiser?<span class="faq-toggle">+</span></button><div class="faq-answer"><p>Sim, absolutamente. Não existem contratos nem fidelizações. Podes cancelar o teu serviço a qualquer momento sem penalizações. Basta enviar mensagem no WhatsApp.</p></div></div>
+    <div class="faq-item reveal"><button class="faq-question" onclick="toggleFaq(this)">O serviço funciona fora de Portugal?<span class="faq-toggle">+</span></button><div class="faq-answer"><p>Sim! A Buétv funciona em toda a Europa e em muitos outros países. Temos clientes em Portugal, Espanha, França, Suíça, Alemanha, Reino Unido, Luxemburgo e muito mais. Desde que tenhas internet, funciona.</p></div></div>
+    <div class="faq-item reveal"><button class="faq-question" onclick="toggleFaq(this)">Como é protegida a minha privacidade (RGPD)?<span class="faq-toggle">+</span></button><div class="faq-answer"><p>Cumprimos integralmente o Regulamento Geral sobre a Proteção de Dados (RGPD). Os teus dados pessoais são tratados com confidencialidade total e não são partilhados com terceiros. Podes solicitar a eliminação dos teus dados a qualquer momento contactando-nos via email.</p></div></div>
+    <div class="faq-item reveal"><button class="faq-question" onclick="toggleFaq(this)">Tem canais de futebol e desporto em direto?<span class="faq-toggle">+</span></button><div class="faq-answer"><p>Sim! Incluímos Sport TV, Benfica TV, Porto Canal, Eurosport, Fox Sports e muitos mais. Liga Portuguesa, Champions League, Premier League, Bundesliga, LaLiga e praticamente todas as competições importantes estão disponíveis em direto.</p></div></div>
+    <div class="faq-item reveal"><button class="faq-question" onclick="toggleFaq(this)">Em que dispositivos funciona a Buétv?<span class="faq-toggle">+</span></button><div class="faq-answer"><p>A Buétv é compatível com Smart TV (Samsung, LG, Sony), telemóvel e tablet Android e iOS, computador Windows e macOS, Amazon Fire Stick, TV Box Android, Apple TV e qualquer dispositivo com acesso à internet e um player de IPTV.</p></div></div>
+  </div>
+</section>
+
+<!-- CAROUSEL 5 — TOP RATED (antes do footer) -->
+<div class="carousel-section reveal" id="carousel-toprated">
+  <div class="carousel-header"><h2>🏆 Os Mais Vistos de Sempre</h2></div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="track-toprated" style="animation:scroll-left 38s linear infinite"></div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<section id="cta-final" class="reveal">
+  <h2>Pronto para acabar com<br>a televisão cara?</h2>
+  <p>Junta-te a mais de 500 clientes satisfeitos em toda a Europa.<br>Testa 24h grátis, sem cartão, sem compromisso.</p>
+  <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="btn-whatsapp" style="font-size:18px;padding:16px 40px;display:inline-flex">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.858L.057 23.882a.5.5 0 0 0 .61.637l6.223-1.634A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.019-1.377l-.36-.214-3.732.978.995-3.648-.235-.374A9.79 9.79 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+    Falar no WhatsApp Agora
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Bué<span>tv</span></div>
+        <p class="footer-desc">O melhor serviço de streaming de Portugal. Mais de 12.000 canais, futebol ao vivo e um catálogo imenso de filmes e séries.</p>
+        <p style="color:var(--gray);font-size:13px;margin-top:12px">📍 Lisboa, Portugal</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <a href="#hero">Início</a><a href="#brand">Sobre nós</a><a href="#plans">Planos</a><a href="#how">Como Funciona</a><a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Suporte</h4>
+        <a href="javascript:void(0)" onclick="abrirModalCadastro()">WhatsApp</a>
+        <a href="mailto:suporte@buetv.online">suporte@buetv.online</a>
+        <a href="#faq">Perguntas Frequentes</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Política de Privacidade</a><a href="#">Termos de Serviço</a><a href="#">Política RGPD</a><a href="#">Política de Cookies</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Buétv. Todos os direitos reservados.</p>
+      <p>suporte@buetv.online</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="javascript:void(0)" onclick="abrirModalCadastro()" id="wa-float" title="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.528 5.858L.057 23.882a.5.5 0 0 0 .61.637l6.223-1.634A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.806 9.806 0 0 1-5.019-1.377l-.36-.214-3.732.978.995-3.648-.235-.374A9.79 9.79 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+</a>
+
+<!-- SOCIAL PROOF POPUP -->
+<div id="social-popup">
+  <div class="popup-avatar" id="popup-avatar"></div>
+  <div class="popup-body">
+    <div class="popup-name" id="popup-name"></div>
+    <div class="popup-action" id="popup-action"></div>
+    <div class="popup-time" id="popup-time">agora mesmo</div>
+  </div>
+  <button class="popup-close" id="popup-close" aria-label="Fechar">×</button>
+</div>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+  <p>Utilizamos cookies para melhorar a tua experiência. Ao continuar, aceitas a nossa <a href="#">Política de Cookies</a> e <a href="#">Privacidade</a>.</p>
+  <div class="cookie-btns">
+    <button class="btn-cookie-accept" onclick="acceptCookies()">Aceitar</button>
+    <button class="btn-cookie-reject" onclick="rejectCookies()">Rejeitar</button>
+  </div>
+</div>
+
+<!-- LEAD CAPTURE MODAL -->
+<div id="modal-cadastro" class="modal-overlay" style="display:none" onclick="closeLeadModalOutside(event)">
+  <div class="modal-card" style="max-width:420px">
+    <button class="modal-close" onclick="closeLeadModal()">✕</button>
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:36px;margin-bottom:8px">🎁</div>
+      <h2 style="font-size:22px;font-weight:700;margin-bottom:6px">Teste Grátis — 2 Horas</h2>
+      <p style="color:var(--gray);font-size:14px;line-height:1.5">Preenche os teus dados abaixo e recebe 2 horas de acesso gratuito via WhatsApp — sem cartão, sem compromisso!</p>
+    </div>
+    <div style="text-align:center;margin-bottom:16px">
+      <span style="display:inline-block;background:rgba(0,200,83,0.15);border:1px solid #00C853;border-radius:8px;padding:8px 16px;color:#00C853;font-size:13px;font-weight:600">🎁 2 horas grátis para experimentares tudo</span>
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="display:block;color:var(--gray);font-size:13px;margin-bottom:6px;font-weight:600">Nome *</label>
+      <input id="nome" type="text" placeholder="O teu nome completo"
+        style="width:100%;background:#070F2B;border:1px solid rgba(0,212,255,0.12);border-radius:8px;padding:12px 14px;color:#fff;font-size:15px;outline:none;font-family:'DM Sans',sans-serif;box-sizing:border-box"
+        onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(0,212,255,0.12)'">
+    </div>
+    <div style="margin-bottom:20px">
+      <label style="display:block;color:var(--gray);font-size:13px;margin-bottom:6px;font-weight:600">Telemóvel *</label>
+      <input id="telemovel" type="tel" placeholder="+351 9XX XXX XXX"
+        style="width:100%;background:#070F2B;border:1px solid rgba(0,212,255,0.12);border-radius:8px;padding:12px 14px;color:#fff;font-size:15px;outline:none;font-family:'DM Sans',sans-serif;box-sizing:border-box"
+        onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(0,212,255,0.12)'">
+    </div>
+    <div id="lead-error" style="display:none;background:rgba(220,38,38,0.1);border:1px solid #dc2626;border-radius:8px;padding:10px 14px;color:#ff6b6b;font-size:13px;margin-bottom:14px"></div>
+    <button id="btn-enviar" onclick="submeterFormulario()"
+      style="width:100%;background:#25D366;color:#fff;font-weight:700;font-size:16px;padding:14px;border-radius:8px;border:none;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px">
+      💬 Receber Acesso no WhatsApp
+    </button>
+    <div style="text-align:center;margin-top:10px;color:var(--gray);font-size:12px">Sem cartão · Acesso imediato · Cancela quando quiseres</div>
+  </div>
+</div>
+
+<!-- DEVICE MODALS -->
+<div id="modal-smarttv" class="modal-overlay" style="display:none" onclick="closeDevModalOutside(event,'modal-smarttv')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeDevModal('modal-smarttv')">✕</button>
+    <img src="fotos/card-smarttv.jpg" alt="Smart TV" class="modal-img" onerror="this.style.display='none'">
+    <div class="modal-icon-title"><span class="modal-icon">📺</span><span class="modal-title">Smart TV</span></div>
+    <div class="modal-sub">Samsung, LG, Sony, TCL e mais</div>
+    <span class="modal-badge">✅ Compatível com Buétv</span>
+    <ul class="modal-features">
+      <li>App próprio instalável</li>
+      <li>Interface igual Netflix</li>
+      <li>Qualidade 4K HDR</li>
+    </ul>
+    <div class="modal-promo">🎁 <strong>Teste GRÁTIS de 24 Horas!</strong><br>Instala na tua Smart TV e testa agora mesmo</div>
+    <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="modal-wa-btn">💬 Fala no WhatsApp e instala na tua Smart TV</a>
+    <div class="modal-microcopy">O nosso suporte vai ajudar-te a instalar em menos de 2 minutos!</div>
+  </div>
+</div>
+
+<div id="modal-tvbox" class="modal-overlay" style="display:none" onclick="closeDevModalOutside(event,'modal-tvbox')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeDevModal('modal-tvbox')">✕</button>
+    <img src="fotos/card-tvbox.jpg" alt="TV Box" class="modal-img" onerror="this.style.display='none'">
+    <div class="modal-icon-title"><span class="modal-icon">📦</span><span class="modal-title">TV Box</span></div>
+    <div class="modal-sub">Android TV Box</div>
+    <span class="modal-badge">✅ Compatível com Buétv</span>
+    <ul class="modal-features">
+      <li>Instalação em 2 minutos</li>
+      <li>Funciona em qualquer TV</li>
+      <li>Controlo remoto incluído</li>
+    </ul>
+    <div class="modal-promo">🎁 <strong>Teste GRÁTIS de 24 Horas!</strong><br>Instala na tua TV Box e testa agora mesmo</div>
+    <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="modal-wa-btn">💬 Fala no WhatsApp e instala na tua TV Box</a>
+    <div class="modal-microcopy">O nosso suporte vai ajudar-te a instalar em menos de 2 minutos!</div>
+  </div>
+</div>
+
+<div id="modal-firestick" class="modal-overlay" style="display:none" onclick="closeDevModalOutside(event,'modal-firestick')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeDevModal('modal-firestick')">✕</button>
+    <img src="fotos/card-firestick.jpg" alt="Fire TV Stick" class="modal-img" onerror="this.style.display='none'">
+    <div class="modal-icon-title"><span class="modal-icon">🔥</span><span class="modal-title">Fire TV Stick</span></div>
+    <div class="modal-sub">Amazon Fire TV Stick</div>
+    <span class="modal-badge">✅ Compatível com Buétv</span>
+    <ul class="modal-features">
+      <li>Plug &amp; Play — liga e funciona</li>
+      <li>App dedicado disponível</li>
+      <li>Controlo por voz</li>
+    </ul>
+    <div class="modal-promo">🎁 <strong>Teste GRÁTIS de 24 Horas!</strong><br>Instala no teu Fire Stick e testa agora mesmo</div>
+    <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="modal-wa-btn">💬 Fala no WhatsApp e instala no teu Fire Stick</a>
+    <div class="modal-microcopy">O nosso suporte vai ajudar-te a instalar em menos de 2 minutos!</div>
+  </div>
+</div>
+
+<div id="modal-notebook" class="modal-overlay" style="display:none" onclick="closeDevModalOutside(event,'modal-notebook')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeDevModal('modal-notebook')">✕</button>
+    <img src="fotos/card-notebook.jpg" alt="Notebook & PC" class="modal-img" onerror="this.style.display='none'">
+    <div class="modal-icon-title"><span class="modal-icon">💻</span><span class="modal-title">Notebook &amp; PC</span></div>
+    <div class="modal-sub">Windows, Mac, Linux</div>
+    <span class="modal-badge">✅ Compatível com Buétv</span>
+    <ul class="modal-features">
+      <li>Acesso directo pelo navegador</li>
+      <li>App para desktop disponível</li>
+      <li>Sem limite de uso</li>
+    </ul>
+    <div class="modal-promo">🎁 <strong>Teste GRÁTIS de 24 Horas!</strong><br>Instala no teu PC e testa agora mesmo</div>
+    <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="modal-wa-btn">💬 Fala no WhatsApp e instala no teu PC</a>
+    <div class="modal-microcopy">O nosso suporte vai ajudar-te a instalar em menos de 2 minutos!</div>
+  </div>
+</div>
+
+<div id="modal-telemovel" class="modal-overlay" style="display:none" onclick="closeDevModalOutside(event,'modal-telemovel')">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeDevModal('modal-telemovel')">✕</button>
+    <img src="fotos/card-telemovel.jpg" alt="Telemóvel" class="modal-img" onerror="this.style.display='none'">
+    <div class="modal-icon-title"><span class="modal-icon">📱</span><span class="modal-title">Telemóvel</span></div>
+    <div class="modal-sub">Android e iOS</div>
+    <span class="modal-badge">✅ Compatível com Buétv</span>
+    <ul class="modal-features">
+      <li>App na Google Play Store</li>
+      <li>App na Apple App Store</li>
+      <li>Assiste offline</li>
+    </ul>
+    <div class="modal-promo">🎁 <strong>Teste GRÁTIS de 24 Horas!</strong><br>Instala no teu Telemóvel e testa agora mesmo</div>
+    <a href="javascript:void(0)" onclick="abrirModalCadastro()" class="modal-wa-btn">💬 Fala no WhatsApp e instala no teu Telemóvel</a>
+    <div class="modal-microcopy">O nosso suporte vai ajudar-te a instalar em menos de 2 minutos!</div>
+  </div>
+</div>
+
+<script>
+// ── PARTICLES ──
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--del:${Math.random()*4}s`;
+    c.appendChild(p);
+  }
+})();
+
+// ── COUNTDOWN TIMER ──
+(function(){
+  let total=6207; // 1h43m27s in seconds
+  const el=document.getElementById('countdown');
+  function fmt(s){
+    const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;
+    return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  }
+  el.textContent=fmt(total);
+  setInterval(()=>{
+    total=total>0?total-1:7200;
+    el.textContent=fmt(total);
+  },1000);
+})();
+
+// ── ONLINE COUNTER ──
+let onlineBase=4200;
+function updateOnline(){
+  const delta=Math.floor(Math.random()*101)-50;
+  onlineBase=Math.max(3800,Math.min(4800,onlineBase+delta));
+  const fmt=onlineBase.toLocaleString('pt-PT');
+  const b=document.getElementById('online-count-bar');
+  const h=document.getElementById('online-count-hero');
+  const s=document.getElementById('online-count-stats');
+  const p=document.getElementById('online-count-plans');
+  if(b)b.textContent=fmt;
+  if(h)h.textContent=fmt;
+  if(s)s.textContent=fmt;
+  if(p)p.textContent=fmt;
+}
+setInterval(updateOnline,3000);
+
+// ── TMDB ──
+const API_KEY='35f0a72083a8f891af7a49c05df08f4d';
+const IMG_BASE='https://image.tmdb.org/t/p/w300';
+const FALLBACK_COLORS=[
+  ['#1a1a2e','#16213e'],['#0f3460','#533483'],['#e94560','#0f3460'],
+  ['#1b1b2f','#2e4057'],['#2d132c','#ee4540'],['#c72c41','#801336'],
+  ['#0d0d0d','#1a1a2e'],['#0b3d91','#1560bd']
+];
+let cachedMovies=[];
+
+function fallbackCard(title,idx){
+  const colors=FALLBACK_COLORS[idx%FALLBACK_COLORS.length];
+  const d=document.createElement('div');
+  d.className='card-fallback';
+  d.style.background=`linear-gradient(135deg,${colors[0]},${colors[1]})`;
+  d.textContent=title||'—';
+  return d;
+}
+
+function makeCard(item,showLive){
+  const wrap=document.createElement('div');
+  wrap.className='card-wrap';
+  const title=item.title||item.name||'';
+  if(item.poster_path){
+    const img=document.createElement('img');
+    img.className='card-img';
+    img.alt=title;
+    img.loading='lazy';
+    img.src=IMG_BASE+item.poster_path;
+    img.onerror=function(){wrap.replaceChild(fallbackCard(title,item._idx||0),img);};
+    wrap.appendChild(img);
+  } else {
+    wrap.appendChild(fallbackCard(title,item._idx||0));
+  }
+  const ov=document.createElement('div');
+  ov.className='card-overlay';
+  ov.textContent='▶';
+  wrap.appendChild(ov);
+  if(showLive&&Math.random()>0.65){
+    const b=document.createElement('div');
+    b.className='badge-live';
+    b.textContent='AO VIVO';
+    wrap.appendChild(b);
+  }
+  return wrap;
+}
+
+function fillTrack(trackId,items,showLive){
+  const track=document.getElementById(trackId);
+  if(!track)return;
+  track.innerHTML='';
+  const withIdx=items.map((it,i)=>({...it,_idx:i}));
+  [...withIdx,...withIdx].forEach(item=>track.appendChild(makeCard(item,showLive)));
+}
+
+function populateMockupGrid(movies){
+  const grid=document.getElementById('mockup-grid');
+  if(!grid)return;
+  const slots=grid.querySelectorAll('.mockup-poster');
+  movies.slice(0,slots.length).forEach((m,i)=>{
+    if(m.poster_path){
+      const img=document.createElement('img');
+      img.src=IMG_BASE+m.poster_path;
+      img.alt=m.title||m.name||'';
+      img.loading='lazy';
+      img.style.cssText='width:100%;height:100%;object-fit:cover';
+      slots[i].appendChild(img);
+    } else {
+      const colors=FALLBACK_COLORS[i%FALLBACK_COLORS.length];
+      slots[i].style.background=`linear-gradient(135deg,${colors[0]},${colors[1]})`;
+    }
+  });
+}
+
+async function fetchTMDB(url){
+  const r=await fetch(url);
+  if(!r.ok)throw new Error('fail');
+  const d=await r.json();
+  return d.results||[];
+}
+
+async function loadAllCarousels(){
+  const endpoints=[
+    {url:`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=pt-PT&page=1`,track:'track-movies',live:false},
+    {url:`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=pt-PT&page=1`,track:'track-series',live:false},
+    {url:`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&with_genres=16&with_origin_country=JP&language=pt-PT&sort_by=popularity.desc`,track:'track-animes',live:false},
+    {url:`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=pt-PT&page=1`,track:'track-upcoming',live:false},
+    {url:`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=pt-PT&page=1`,track:'track-toprated',live:false},
+    {url:`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=99&with_keywords=818|1568&language=pt-PT&sort_by=popularity.desc`,track:'track-sport',live:true}
+  ];
+  const results=await Promise.allSettled(endpoints.map(e=>fetchTMDB(e.url)));
+  results.forEach((res,i)=>{
+    const items=res.status==='fulfilled'?res.value:[];
+    fillTrack(endpoints[i].track,items,endpoints[i].live);
+    if(i===0&&items.length){cachedMovies=items;populateMockupGrid(items);}
+  });
+}
+loadAllCarousels().catch(()=>{});
+
+// ── PLATFORMS MARQUEE (real logos) ──
+(function(){
+  const platforms=[
+    {name:'Netflix',url:'https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg'},
+    {name:'HBO',url:'fotos/logos/hbo.png'},
+    {name:'Disney+',url:'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg'},
+    {name:'Prime Video',url:'https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg'},
+    {name:'Apple TV+',url:'https://upload.wikimedia.org/wikipedia/commons/2/28/Apple_TV_Plus_Logo.svg'},
+    {name:'Paramount+',url:'fotos/paramount.jpg'},
+    {name:'Crunchyroll',url:'fotos/crunchyroll.jpg'},
+    {name:'Discovery+',url:'fotos/discovery.jpg'},
+    {name:'Sport TV',url:'fotos/sporttv.jpg'},
+    {name:'Eurosport',url:'fotos/eurosport.png'},
+    {name:'ESPN',url:'https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg'},
+    {name:'DAZN',url:'fotos/dazn.jpg'}
+  ];
+  const track=document.getElementById('marquee-track');
+  const items=[...platforms,...platforms];
+  items.forEach(p=>{
+    const wrap=document.createElement('div');
+    wrap.className='platform-logo-wrap';
+    const img=document.createElement('img');
+    img.alt=p.name;
+    img.loading='lazy';
+    img.src=p.url;
+    img.onerror=function(){
+      img.style.display='none';
+      const fb=document.createElement('span');
+      fb.className='logo-fallback';
+      fb.textContent=p.name;
+      wrap.appendChild(fb);
+    };
+    wrap.appendChild(img);
+    track.appendChild(wrap);
+  });
+})();
+
+// ── SCROLL REVEAL ──
+const revealObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+// ── STATS COUNTER ──
+function animateCounter(el){
+  const target=parseInt(el.dataset.target);
+  const prefix=el.dataset.prefix||'';
+  const suffix=el.dataset.suffix||'';
+  const step=target/60;
+  let current=0;
+  const timer=setInterval(()=>{
+    current+=step;
+    if(current>=target){current=target;clearInterval(timer);}
+    el.textContent=prefix+Math.floor(current).toLocaleString('pt-PT')+suffix;
+  },2000/60);
+}
+const statsObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);statsObs.unobserve(e.target);}});
+},{threshold:0.5});
+document.querySelectorAll('.stat-number[data-target]').forEach(el=>statsObs.observe(el));
+
+// ── FAQ ──
+function toggleFaq(btn){
+  const answer=btn.nextElementSibling;
+  const toggle=btn.querySelector('.faq-toggle');
+  const isOpen=answer.classList.contains('open');
+  document.querySelectorAll('.faq-answer.open').forEach(a=>{
+    a.classList.remove('open');
+    a.previousElementSibling.querySelector('.faq-toggle').textContent='+';
+  });
+  if(!isOpen){answer.classList.add('open');toggle.textContent='−';}
+}
+
+// ── DEVICE MODALS ──
+function openDevModal(id){
+  const m=document.getElementById(id);
+  if(m){m.style.display='flex';document.body.style.overflow='hidden';}
+}
+function closeDevModal(id){
+  const m=document.getElementById(id);
+  if(m){m.style.display='none';document.body.style.overflow='';}
+}
+function closeDevModalOutside(e,id){
+  if(e.target===document.getElementById(id))closeDevModal(id);
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    ['modal-smarttv','modal-tvbox','modal-firestick','modal-notebook','modal-telemovel']
+      .forEach(function(id){closeDevModal(id);});
+  }
+});
+
+// ── COOKIES ──
+function acceptCookies(){localStorage.setItem('cookies','accepted');document.getElementById('cookie-banner').classList.add('hidden');}
+function rejectCookies(){localStorage.setItem('cookies','rejected');document.getElementById('cookie-banner').classList.add('hidden');}
+if(localStorage.getItem('cookies'))document.getElementById('cookie-banner').classList.add('hidden');
+
+// ── SOCIAL PROOF POPUP ──
+(function(){
+  if(sessionStorage.getItem('popup-closed'))return;
+  const notifications=[
+    {name:'João M.',city:'Lisboa',action:'começou a assistir agora',color:'#1d4ed8',init:'J',photo:'popup1.jpg'},
+    {name:'Ana S.',city:'Porto',action:'assinou o plano Standard',color:'#16a34a',init:'A',photo:'popup2.jpg'},
+    {name:'Miguel R.',city:'Paris',action:'está a ver futebol ao vivo',color:'#7c3aed',init:'M',photo:'popup3.jpg'},
+    {name:'Carlos F.',city:'Londres',action:'assinou há 3 minutos',color:'#ea580c',init:'C',photo:'popup4.jpg'},
+    {name:'Rita M.',city:'Amesterdão',action:'fez o teste gratuito',color:'#db2777',init:'R',photo:'popup5.jpg'},
+    {name:'Pedro A.',city:'Zurique',action:'assinou o plano Família',color:'#00D4FF',init:'P',photo:'popup6.jpg'},
+    {name:'Mariana L.',city:'Madrid',action:'está a ver séries agora',color:'#ca8a04',init:'M',photo:'popup7.jpg'},
+    {name:'Tiago N.',city:'Frankfurt',action:'assinou há 1 minuto',color:'#dc2626',init:'T',photo:'popup8.jpg'},
+    {name:'Sofia R.',city:'Bruxelas',action:'começou a assistir',color:'#166534',init:'S',photo:'popup9.jpg'},
+    {name:'Bruno C.',city:'Lyon',action:'assinou o plano Básico',color:'#1e40af',init:'B',photo:'popup10.jpg'}
+  ];
+  let idx=0;
+  const popup=document.getElementById('social-popup');
+  const avatarEl=document.getElementById('popup-avatar');
+  const nameEl=document.getElementById('popup-name');
+  const actionEl=document.getElementById('popup-action');
+  document.getElementById('popup-close').addEventListener('click',()=>{
+    popup.classList.remove('show');
+    popup.classList.add('hide');
+    setTimeout(()=>{popup.style.display='none';},400);
+    sessionStorage.setItem('popup-closed','1');
+  });
+  function showNext(){
+    if(sessionStorage.getItem('popup-closed'))return;
+    const n=notifications[idx%notifications.length];
+    idx++;
+    avatarEl.style.background=n.color;
+    avatarEl.innerHTML='<span style="position:relative;z-index:0">'+n.init+'</span>';
+    const pImg=document.createElement('img');
+    pImg.src='fotos/'+n.photo;
+    pImg.alt=n.name;
+    pImg.onerror=function(){this.style.display='none';};
+    avatarEl.appendChild(pImg);
+    nameEl.textContent='🔴 '+n.name+' de '+n.city;
+    actionEl.textContent=n.action;
+    popup.classList.remove('hide');
+    popup.classList.add('show');
+    setTimeout(()=>{
+      popup.classList.remove('show');
+      popup.classList.add('hide');
+      setTimeout(()=>{
+        popup.style.display='none';
+        if(!sessionStorage.getItem('popup-closed')){
+          const wait=8000+Math.random()*4000;
+          setTimeout(showNext,wait);
+        }
+      },400);
+    },5000);
+  }
+  setTimeout(showNext,3000);
+})();
+
+// ── ABRIR MODAL CADASTRO ──
+function abrirModalCadastro(){
+  document.getElementById('modal-cadastro').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+
+// ── LEAD MODAL ──
+function openLeadModal(){
+  const m=document.getElementById('modal-cadastro');
+  m.style.display='flex';
+  document.body.style.overflow='hidden';
+  document.getElementById('nome').value='';
+  document.getElementById('telemovel').value='';
+  document.getElementById('lead-error').style.display='none';
+  const btn=document.getElementById('btn-enviar');
+  btn.textContent='💬 Receber Acesso no WhatsApp';
+  btn.disabled=false;
+}
+function closeLeadModal(){
+  document.getElementById('modal-cadastro').style.display='none';
+  document.body.style.overflow='';
+}
+function closeLeadModalOutside(e){
+  if(e.target===document.getElementById('modal-cadastro'))closeLeadModal();
+}
+async function submeterFormulario(){
+  const nome=document.getElementById('nome').value.trim();
+  const tel=document.getElementById('telemovel').value.trim();
+  if(!nome||!tel){
+    const err=document.getElementById('lead-error');
+    err.textContent='Por favor preenche o nome e o telemóvel.';
+    err.style.display='block';
+    return;
+  }
+  const btn=document.getElementById('btn-enviar');
+  btn.textContent='A enviar... ⏳';
+  btn.disabled=true;
+  await enviarLead(nome,tel);
+  const msg=`Olá! Chamo-me ${nome} e gostaria de experimentar a Buétv gratuitamente durante 2 horas. Podem enviar-me o acesso de teste? Obrigado!`;
+  setTimeout(()=>{
+    document.getElementById('modal-cadastro').style.display='none';
+    document.body.style.overflow='';
+    window.open(`https://wa.me/351925385705?text=${encodeURIComponent(msg)}`,'_blank');
+  },800);
+}
+
+async function enviarLead(nome, telemovel) {
+  try {
+    await fetch('https://script.google.com/macros/s/AKfycbwkz9C3aJNKQATf5EXIBlPnDZ5o1Lnlv38sPc_DFzvZtFCWlYu0DU_OUA-AEPTbZwCgvw/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nome: nome,
+        telemovel: telemovel,
+        origem: 'Site Buétv'
+      })
+    });
+  } catch(error) {
+    console.log('Erro:', error);
+  }
+}
+</script>
+</body>
+</html>
